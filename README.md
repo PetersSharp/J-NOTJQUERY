@@ -18,7 +18,7 @@ extension of an object **String**
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| - | .ReplaceAll(patern, replace) | Глобальная замена patern на replace в строке |
+| - | .ReplaceAll(pattern, replace) | Global 'pattern' replacement with 'replace' in a string |
 
 extension of an object **HTMLElement**
 
@@ -168,7 +168,7 @@ HTML source:
     <head>
 		<script id="template-list-item" type="text/template">
 		  <li>
-		    <a href="{{url}}">{{p.name}}</a>, {{p.city}}, {{p.info}}
+		    <a href="{{.url}}">{{.p.name}}</a>, {{p.city}}, {{p.info}}
 		  </li>
 		</script>
     </head>

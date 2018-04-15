@@ -95,13 +95,14 @@
             ele.style.opacity = 0;
             ele.style.display = display || "block";
 
-              (function fade() {
+            (function fade() {
                 var val = parseFloat(ele.style.opacity);
                 if (!((val += .02) > 1)) {
                   ele.style.opacity = val;
                   requestAnimationFrame(fade);
                 }
-              })();
+            })();
+            return this;
         };
     }
 
@@ -118,6 +119,7 @@
                     requestAnimationFrame(fade);
                 }
             })();
+            return this;
         };
     }
 
@@ -126,6 +128,7 @@
 
             if (this.classList) { this.classList.add(name); }
             else { this.className += ' ' + name; }
+            return this;
         };
     }
 
@@ -133,6 +136,7 @@
         HTMLElement.prototype.RemoveClass = function (name) {
 
             if (this.classList) { this.classList.remove(name); }
+            return this;
         };
     }
 
@@ -140,6 +144,7 @@
         HTMLElement.prototype.ToggleClass = function (name) {
 
             if (this.classList) { this.classList.toggle(name); }
+            return this;
         };
     }
 
@@ -162,6 +167,7 @@
         HTMLElement.prototype.Html = function (str) {
 
             this.innerHTML = str || "";
+            return this;
         };
     }
 
@@ -176,6 +182,7 @@
         HTMLElement.prototype.Before = function (str) {
 
             this.insertAdjacentHTML("beforebegin", str);
+            return this;
         };
     }
 
@@ -183,6 +190,7 @@
         HTMLElement.prototype.After = function (str) {
 
             this.insertAdjacentHTML("afterend", str);
+            return this;
         };
     }
 

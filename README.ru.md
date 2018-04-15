@@ -22,7 +22,7 @@
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| - | .ReplaceAll(patern, replace) | Глобальная замена patern на replace в строке |
+| - | .ReplaceAll(pattern, replace) | Глобальная замена 'pattern' на 'replace' в строке |
 
 расширение объекта **HTMLElement**
 
@@ -172,7 +172,7 @@ HTML source:
     <head>
 		<script id="template-list-item" type="text/template">
 		  <li>
-		    <a href="{{url}}">{{p.name}}</a>, {{p.city}}, {{p.info}}
+		    <a href="{{.url}}">{{.p.name}}</a>, {{p.city}}, {{p.info}}
 		  </li>
 		</script>
     </head>
