@@ -58,6 +58,8 @@
 | -  | .[FormToObject](#exampleFormToObject)() | Получить объект из данных формы |
 | -  | .[ObjectToForm](#exampleObjectToForm)(data,style) | Создать форму из данных [object data](/example/J-test-schema-1.json) и [object style](/example/J-test-styles-1.json) |
 
+>прием/передача данных:
+
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
 | .ajax | J.[GetJSON](#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |

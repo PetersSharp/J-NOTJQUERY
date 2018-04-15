@@ -54,6 +54,8 @@ extension of an object **HTMLElement**
 | -  | .[FormToObject](#exampleFormToObject)() | Get object from form data |
 | -  | .[ObjectToForm](#exampleObjectToForm)(data,style) | Create a form from the data [object data](/example/J-test-schema-1.json) and [object style](/example/J-test-styles-1.json) |
 
+>communication Network methods:
+
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
 | .ajax | J.[GetJSON](#exampleGetJSON)(url,callback) | Get object from remote Json data |
