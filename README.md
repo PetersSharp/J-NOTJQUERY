@@ -6,7 +6,7 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 ### Features ###
 
 - does not have external dependencies, pure JavaScript ([ECMA](https://ru.wikipedia.org/wiki/ECMAScript))
-- method of using [templates](#exampleTemplateGetJSON) to update data.
+- method of using [templates](README.md#exampleTemplateGetJSON) to update data.
 - method of automatically creating forms from an external source.
 - method of converting a form into an object.
 - includes [css](J.css) styles dashboard based on [https://github.com/mazipan/lightweight-admin-template/](https://github.com/mazipan/lightweight-admin-template/ "Lightweight admin template")
@@ -52,16 +52,16 @@ extension of an object **HTMLElement**
 | .fadeIn | .FadeIn() | Disappearing element |
 | .fadeOut | .FadeOut() | Appearance of an element |
 | .find  | .Find(tag/id) | Find from childs |
-| -  | .[Template](#exampleTemplate)(object) | Get the processed template from the data object |
-| -  | .[FormToObject](#exampleFormToObject)() | Get object from form data |
-| -  | .[ObjectToForm](#exampleObjectToForm)(data,style) | Create a form from the data [object data](/example/J-test-schema-1.json) and [object style](/example/J-test-styles-1.json) |
+| -  | .[Template](README.md#exampleTemplate)(object) | Get the processed template from the data object |
+| -  | .[FormToObject](README.md#exampleFormToObject)() | Get object from form data |
+| -  | .[ObjectToForm](README.md#exampleObjectToForm)(data,style) | Create a form from the data [object data](/example/J-test-schema-1.json) and [object style](/example/J-test-styles-1.json) |
 
 >communication Network methods:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.[GetJSON](#exampleGetJSON)(url,callback) | Get object from remote Json data |
-| .ajax | J.[SendJSON](#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
+| .ajax | J.[GetJSON](README.md#exampleGetJSON)(url,callback) | Get object from remote Json data |
+| .ajax | J.[SendJSON](README.md#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
 
 ----------
 

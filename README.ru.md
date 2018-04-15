@@ -8,7 +8,7 @@
 ### Возможности ###
 
 - не имеет внешних зависимостей, чистый JavaScript ([ECMA](https://ru.wikipedia.org/wiki/ECMAScript))
-- метод использования [темплейтов](#exampleTemplateGetJSON) для обновления данных. 
+- метод использования [темплейтов](README.ru.md#exampleTemplateGetJSON) для обновления данных. 
 - метод автоматического создания форм из внешнего источника.
 - метод преобразования формы в объект.
 - включает [css](J.css) стили dashboard на базе [https://github.com/mazipan/lightweight-admin-template/](https://github.com/mazipan/lightweight-admin-template/ "Lightweight admin template")
@@ -56,16 +56,16 @@
 | .fadeIn | .FadeIn() | Исчезновение элемента |
 | .fadeOut | .FadeOut() | Появление элемента |
 | .find  | .Find(tag/id) | Найти среди потомков |
-| -  | .[Template](#exampleTemplate)(object) | Получить обработанный темплейт из данных object |
-| -  | .[FormToObject](#exampleFormToObject)() | Получить объект из данных формы |
-| -  | .[ObjectToForm](#exampleObjectToForm)(data,style) | Создать форму из данных [object data](/example/J-test-schema-1.json) и [object style](/example/J-test-styles-1.json) |
+| -  | .[Template](README.ru.md#exampleTemplate)(object) | Получить обработанный темплейт из данных object |
+| -  | .[FormToObject](README.ru.md#exampleFormToObject)() | Получить объект из данных формы |
+| -  | .[ObjectToForm](README.ru.md#exampleObjectToForm)(data,style) | Создать форму из данных [object data](/example/J-test-schema-1.json) и [object style](/example/J-test-styles-1.json) |
 
 >прием/передача данных:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.[GetJSON](#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
-| .ajax | J.[SendJSON](#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
+| .ajax | J.[GetJSON](README.ru.md#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
+| .ajax | J.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
 
 ----------
 
