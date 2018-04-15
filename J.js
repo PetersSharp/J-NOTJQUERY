@@ -269,7 +269,7 @@
         HTMLElement.prototype.ObjectToForm = function (options, styles) {
 
             if (typeof(this) !== 'object') { return; }
-            this.FormBuilder = { form: null, onsubmit: null, options: options, styles: styles };
+            this.FormBuilder = { form: null, onsubmit: null, cnt: 0, options: options, styles: styles };
             var owner = this;
 
             var __check_title = function(obj) {
@@ -279,6 +279,14 @@
                 return (((J.isUndefined(obj.properties)) ||
                          (J.isUndefined(obj.properties.title)) ||
                          (!obj.properties.title)) ? false : true);
+            }
+            var __check_propid = function(obj, eletype) {
+                if (!__check_field(obj.properties, "name")) {
+                    obj.properties.name = eletype + "-" + owner.FormBuilder.cnt;
+                }
+                if (!__check_field(obj.properties, "id")) {
+                    obj.properties.id = obj.properties.name;
+                }
             }
             var __check_array = function(arr) {
                 return (((J.isUndefined(arr)) ||
@@ -312,10 +320,6 @@
                         }
                     }
                 }
-                if (
-                    (!__check_field(properties, "id")) &&
-                    (__check_field(properties,  "name"))
-                   ) { ele.setAttribute("id", properties.name); }
                 if (
                     (dstyle) &&
                     (!__check_field(properties, "class"))
@@ -375,6 +379,8 @@
             var __create_sring = function(obj) {
                 var type = ((__check_field(obj.properties, "type")) ? obj.properties.type : "text");
                 obj.properties.type = type;
+                __check_propid(obj, type);
+
                 return __add_label(
                     __create_ele("input", obj.properties, owner.FormBuilder.styles.string),
                     obj
@@ -384,6 +390,8 @@
                 if (__check_field(obj.properties, "type")) {
                     delete obj.properties.type;
                 }
+                __check_propid(obj, "textarea");
+
                 return __add_label(
                     __create_ele("textarea", obj.properties, owner.FormBuilder.styles.text),
                     obj
@@ -391,6 +399,7 @@
             }
             var __create_bool = function(obj) {
                 obj.properties.type = "checkbox";
+                __check_propid(obj, obj.properties.type);
                 return __add_label(
                     __create_xele(
                         __add_class(
@@ -404,13 +413,20 @@
                 );
             }
             var __create_enum = function(obj) {
-                if (!__check_array(obj.enum)) { return null; }
+                if (!__check_array(obj.enum)) {
+                    return null;
+                }
 
                 var div1 = document.createElement("div");
                 __add_class(div1, owner.FormBuilder.styles.xbox);
 
                 for(var i = 0; i < obj.enum.length; i++) {
-                    if (!__check_properties(obj.enum[i])) { continue; }
+                    if (!__check_properties(obj.enum[i])) {
+                        continue;
+                    }
+                    if (!__check_field(obj.enum[i].properties, "name")) {
+                        obj.enum[i].properties.name = "radio-" + owner.FormBuilder.cnt;
+                    }
 
                     var mobj             = obj.enum[i];
                     mobj.properties.id   = obj.enum[i].properties.name + "-" + i;
@@ -422,11 +438,14 @@
                 return __add_label(div1, obj);
             }
             var __create_select = function(obj) {
-                if (!__check_array(obj.list)) { return null; }
+                if (!__check_array(obj.list)) {
+                    return null;
+                }
                 if (__check_field(obj.properties, "type")) {
                     delete obj.properties.type;
                 }
 
+                __check_propid(obj, "select");
                 var ele  = __create_ele("select", obj.properties, owner.FormBuilder.styles.select);
 
                 for(var i = 0; i < obj.list.length; i++) {
@@ -454,6 +473,18 @@
                 }
                 return __add_label(ele, obj);
             }
+            var __create_hidden = function(obj) {
+                if (!__check_field(obj.properties, "value")) {
+                    return null;
+                }
+                if (__check_field(obj.properties, "class")) {
+                    delete obj.properties.class;
+                }
+
+                obj.properties.type = "hidden";
+                __check_propid(obj, obj.properties.type);
+                return __create_ele("input", obj.properties, null);
+            }
             var __parse_source = function(obj) {
                 if (
                     (typeof obj      !== "object") ||
@@ -469,6 +500,12 @@
                     case "boolean": { field = __create_bool(obj);   break; }
                     case "enum":    { field = __create_enum(obj);   break; }
                     case "select":  { field = __create_select(obj); break; }
+                    case "hidden":  { field = __create_hidden(obj); break; }
+                    case "button":  {
+                        obj.properties.type = "button";
+                        field = __create_ele("input", obj.properties, owner.FormBuilder.styles.button);
+                        break;
+                    }
                     case "submit":  {
                         obj.properties.type = "submit";
                         field = __create_ele("input", obj.properties, owner.FormBuilder.styles.submit);
@@ -507,8 +544,8 @@
                 );
                 this.FormBuilder.form.appendChild(h3);
             }
-            for (var i = 0; i < this.FormBuilder.options.form.length; i++) {
-                __parse_source(this.FormBuilder.options.form[i]);
+            for (; this.FormBuilder.cnt < this.FormBuilder.options.form.length; this.FormBuilder.cnt++) {
+                __parse_source(this.FormBuilder.options.form[this.FormBuilder.cnt]);
             }
             this.appendChild(this.FormBuilder.form);
             delete this.FormBuilder.styles;

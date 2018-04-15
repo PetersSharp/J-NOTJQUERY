@@ -106,16 +106,16 @@
 		    form: [
 		    {
 		        type: "sring", title: "First Name",  required: 1,
-	            properties: { type: "text", name: "str1", id: "str1-id", class: "textfield textfield-shadow", placeholder: "I'm placeholder 1" }
+		            properties: { type: "text", name: "str1", id: "str1-id", class: "textfield textfield-shadow", placeholder: "I'm placeholder 1" }
 		    },{
 		        type: "sring", title: "No param",
-	            properties: { name: "str2" }
+		            properties: { name: "str2" }
 		    },{
 		        type: "text", title: "Descripton for Name",
-	            properties: { name: "txtarea1", id: "txtarea1-id", class: "textfield textfield-shadow textfield-radius", rows: 3, placeholder: "I'm placeholder textarea" }
+		            properties: { name: "txtarea1", id: "txtarea1-id", class: "textfield textfield-shadow textfield-radius", rows: 3, placeholder: "I'm placeholder textarea" }
 		    },{
 		        type: "boolean", title: "is Yes/No checkbox?",
-	            properties: { name: "chk1", title: "you Answer?", checked: true }
+		            properties: { name: "chk1", title: "you Answer?", checked: true }
 		    },{
 		        type: "enum", title: "is Enumerator?",
 	            enum: [
@@ -126,24 +126,27 @@
 	            ]
 		    },{
 		        type: "select", title: "is Selector?",
-	            properties: { name: "select1", multiple: true },
-	            list: [
-	                { properties: { title: "FRUIT", value: "fr" }},
-	                { properties: { title: "APPLE", value: "ap" }},
-	                { properties: { title: "BANAN", value: "bn", selected: true }},
-	                { properties: { title: "CHERY", value: "ch", disabled: true }}
-	            ]
+		            properties: { name: "select1", multiple: true },
+		            list: [
+		                { properties: { title: "FRUIT", value: "fr" }},
+		                { properties: { title: "APPLE", value: "ap" }},
+		                { properties: { title: "BANAN", value: "bn", selected: true }},
+		                { properties: { title: "CHERY", value: "ch", disabled: true }}
+		            ]
+		    },{
+		        type: "hidden",
+		            properties: { value: "0987654321" }
 		    },{
 		        type: "submit",
-	            properties: { name: "submit", id: "submit-id1", value: "Submiting.." }
+		            properties: { name: "submit", id: "submit-id1", value: "Submiting.." }
 		    },{
 		        type: "reset",
-	            properties: { name: "reset", id: "reset-id1", value: "Reseting.." }
+		            properties: { name: "reset", id: "reset-id1", value: "Reseting.." }
 	    }],
 	    onsubmit: function(event, form, data) {
-            console.log("Data submiting:", data);
-            return false;
-        }
+	            console.log("Data submiting:", data);
+	            return false;
+	    }
 	},{
 		/* Object css styles class name */
 	    form:    "form",
@@ -156,6 +159,7 @@
 	    boolean: "checkbox checkbox-blue",
 	    enum:    "radio radio-blue",
 	    select:  "select select-radius",
+	    button:  "button button-outline-blue",
 	    submit:  "button button-radius button-outline-blue",
 	    reset:   "button button-radius button-outline-red"
 	});
