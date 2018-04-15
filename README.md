@@ -168,7 +168,7 @@ HTML source:
     <head>
 		<script id="template-list-item" type="text/template">
 		  <li>
-		    <a href="{{.url}}">{{.p.name}}</a>, {{p.city}}, {{p.info}}
+		    <a href="{{.url}}">{{.p.name}}</a>, {{.p.city}}, {{.p.info}}
 		  </li>
 		</script>
     </head>
