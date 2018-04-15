@@ -19,6 +19,73 @@
         ", code: "
     ];
 
+    /* J: NOJQUERY wrapper */
+
+    J = function (id) {
+        var ele = document.querySelectorAll(id, null);
+        return (ele === null || typeof ele[0] === typeof void 0) ? null : ele[0];
+    };
+
+    J.Ready = function (evh) {
+        if (document.readyState !== "loading") {
+            evh();
+        } else {
+            document.addEventListener("DOMContentLoaded", evh);
+        }
+    };
+
+    J.isUndefined = function (obj) {
+        return (typeof obj === typeof void 0);
+    };
+
+    J.GetJSON = function (url, cb) {
+
+        if (!window.XMLHttpRequest) {
+            cb(Jerror[0], false);
+            return;
+        }
+        var request = new XMLHttpRequest();
+        request.open("GET", url, true);
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                var data;
+                try {
+                    data = JSON.parse(request.responseText);
+                } catch(e) {
+                    cb(Jerror[2] + e, false)
+                }
+                ((data == null) ? cb(Jerror[1], false) : cb(data, true));
+            } else {
+                cb(Jerror[2] + Jerror[4] + request.status, false);
+            }
+        };
+        request.onerror = function() {
+            cb(Jerror[2], false);
+        };
+        request.send();
+    };
+
+    J.SendJSON = function (url, data, cb) {
+
+        if (!window.XMLHttpRequest) {
+            cb(Jerror[0], false);
+            return;
+        }
+        var sdata;
+        try {
+            sdata = JSON.stringify(data);
+        } catch(e) {
+            cb(Jerror[3] + e, false)
+        }
+        var request = new XMLHttpRequest();
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onerror = function() {
+            cb(Jerror[3] + Jerror[4] + request.status, false);
+        };
+        request.send(sdata);
+    };
+
     /* J: HTMLElement extension */
 
     if (!HTMLElement.prototype.FadeIn) {
@@ -181,7 +248,7 @@
                 if (['select-multiple'].indexOf(ele[i].type) != -1) {
                     for(var n = (ele[i].options.length - 1); n >= 0; n--) {
                         if (ele[i].options[n].selected) {
-                            if (typeof obj[ele[i].name] === "undefined") {
+                            if (J.isUndefined(obj[ele[i].name])) {
                                 obj[ele[i].name] = [];
                             }
                             if (obj[ele[i].name].indexOf(ele[i].options[n].value) == -1) {
@@ -206,20 +273,20 @@
             var owner = this;
 
             var __check_title = function(obj) {
-                return (((typeof obj.title === "undefined") || (!obj.title)) ? false : true);
+                return (((J.isUndefined(obj.title)) || (!obj.title)) ? false : true);
             }
             var __check_properties = function(obj) {
-                return (((typeof obj.properties       === "undefined") ||
-                         (typeof obj.properties.title === "undefined") ||
+                return (((J.isUndefined(obj.properties)) ||
+                         (J.isUndefined(obj.properties.title)) ||
                          (!obj.properties.title)) ? false : true);
             }
             var __check_array = function(arr) {
-                return (((typeof arr === "undefined") ||
+                return (((J.isUndefined(arr)) ||
                          (!Array.isArray(arr))        ||
                          (!arr.length))  ? false : true);
             }
             var __check_field = function(obj, key) {
-                return (((typeof obj[key] === "undefined") ||
+                return (((J.isUndefined(obj[key])) ||
                          (!obj[key])) ? false : true);
             }
             var __add_class = function(ele, aclass) {
@@ -268,7 +335,7 @@
                 if (__check_field(owner.FormBuilder.styles, "label")) {
                     __add_class(div2, owner.FormBuilder.styles.label);
                 }
-                if (typeof obj.required !== "undefined") {
+                if (!J.isUndefined(obj.required)) {
                     __add_class(div2, owner.FormBuilder.styles.rlabel);
                 }
                 div2.appendChild(
@@ -367,17 +434,17 @@
 
                     var mobj  = {},
                         title = (
-                            ((typeof obj.list[i].properties.title === "undefined") || (!obj.list[i].properties.title)) ?
+                            ((J.isUndefined(obj.list[i].properties.title)) || (!obj.list[i].properties.title)) ?
                                 ("_" + i) : obj.list[i].properties.title
                     );
                     mobj.value = (
-                        ((typeof obj.list[i].properties.value === "undefined") || (!obj.list[i].properties.value)) ?
+                        ((J.isUndefined(obj.list[i].properties.value)) || (!obj.list[i].properties.value)) ?
                             title : obj.list[i].properties.value
                     );
-                    if (typeof obj.list[i].properties.selected !== "undefined") {
+                    if (!J.isUndefined(obj.list[i].properties.selected)) {
                         mobj.selected = true;
                     }
-                    if (typeof obj.list[i].properties.disabled !== "undefined") {
+                    if (!J.isUndefined(obj.list[i].properties.disabled)) {
                         mobj.disabled = true;
                     }
 
@@ -421,7 +488,7 @@
             if (!__check_array(this.FormBuilder.options.form)) { return; }
 
             this.FormBuilder.form = document.createElement("form");
-            if (typeof this.FormBuilder.options.properties === "undefined") {
+            if (J.isUndefined(this.FormBuilder.options.properties)) {
                 __add_class(
                     this.FormBuilder.form,
                     this.FormBuilder.styles.form
@@ -462,72 +529,9 @@
                         owner.FormBuilder.form,
                         owner.FormBuilder.form.FormToObject()
                 );
-                return ((result === "undefined") ? false : result);
+                return ((J.isUndefined(result)) ? false : result);
             };
         };
     }
-
-    /* J: NOJQUERY wrapper */
-
-    J = function (id) {
-        var ele = document.querySelectorAll(id, null);
-        return (ele === null || typeof ele[0] === "undefined") ? null : ele[0];
-    };
-
-    J.Ready = function (evh) {
-        if (document.readyState !== "loading") {
-            evh();
-        } else {
-            document.addEventListener("DOMContentLoaded", evh);
-        }
-    };
-
-    J.GetJSON = function (url, cb) {
-
-        if (!window.XMLHttpRequest) {
-            cb(Jerror[0], false);
-            return;
-        }
-        var request = new XMLHttpRequest();
-        request.open("GET", url, true);
-        request.onload = function() {
-            if (request.status >= 200 && request.status < 400) {
-                var data;
-                try {
-                    data = JSON.parse(request.responseText);
-                } catch(e) {
-                    cb(Jerror[2] + e, false)
-                }
-                ((data == null) ? cb(Jerror[1], false) : cb(data, true));
-            } else {
-                cb(Jerror[2] + Jerror[4] + request.status, false);
-            }
-        };
-        request.onerror = function() {
-            cb(Jerror[2], false);
-        };
-        request.send();
-    };
-
-    J.SendJSON = function (url, data, cb) {
-
-        if (!window.XMLHttpRequest) {
-            cb(Jerror[0], false);
-            return;
-        }
-        var sdata;
-        try {
-            sdata = JSON.stringify(data);
-        } catch(e) {
-            cb(Jerror[3] + e, false)
-        }
-        var request = new XMLHttpRequest();
-        request.open("POST", url, true);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.onerror = function() {
-            cb(Jerror[3] + Jerror[4] + request.status, false);
-        };
-        request.send(sdata);
-    };
 
 }());

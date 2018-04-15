@@ -50,7 +50,9 @@
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
+| $(id/class/tag) | J(id/class/tag) | Получить объект |
 | .ready | .Ready() | Ожидать загрузки страницы |
+| - | .isUndefined(object) | Тест объекта на undefined или null |
 | .fadeIn | .FadeIn() | Исчезновение элемента |
 | .fadeOut | .FadeOut() | Появление элемента |
 | .find  | .Find(tag/id) | Найти среди потомков |

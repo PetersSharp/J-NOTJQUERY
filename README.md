@@ -46,7 +46,9 @@ extension of an object **HTMLElement**
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
+| $(id/class/tag) | J(id/class/tag) | Get element by id/class/tag |
 | .ready | .Ready() | Wait for page load |
+| - | .isUndefined(object) | Test for undefined or null |
 | .fadeIn | .FadeIn() | Disappearing element |
 | .fadeOut | .FadeOut() | Appearance of an element |
 | .find  | .Find(tag/id) | Find from childs |
