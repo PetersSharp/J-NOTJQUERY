@@ -1,0 +1,149 @@
+{
+    "title": "This New Form",
+    "properties": {
+	"name": "form2",
+	"id": "form-2"
+    },
+    "form": [{
+	"type": "sring",
+	"title": "First Name",
+	"required": 1,
+	"properties": {
+	    "type": "text",
+	    "name": "str1",
+	    "id": "name-test1",
+	    "class": "textfield textfield-shadow",
+	    "placeholder": "I am placeholder One"
+	}
+    }, {
+	"type": "sring",
+	"title": "Second Name",
+	"properties": {
+	    "type": "text",
+	    "name": "str2",
+	    "id": "name-test2",
+	    "class": "textfield textfield-shadow",
+	    "placeholder": "I am placeholder Two"
+	}
+    }, {
+	"type": "sring",
+	"title": "No param",
+	"properties": {
+	    "name": "str33",
+	    "type": "text"
+	}
+    }, {
+	"type": "sring",
+	"title": "is Password",
+	"properties": {
+	    "type": "password",
+	    "name": "str44"
+	}
+    }, {
+	"type": "text",
+	"title": "Descripton for Name",
+	"properties": {
+	    "name": "txta1",
+	    "id": "desc-test1",
+	    "class": "textfield textfield-shadow textfield-radius",
+	    "rows": 3,
+	    "placeholder": "I am placeholder Descripton"
+	}
+    }, {
+	"type": "boolean",
+	"title": "is Yes/No?",
+	"properties": {
+	    "type": "checkbox",
+	    "name": "chk1",
+	    "checked": true,
+	    "id": "chk1-id"
+	}
+    }, {
+	"type": "enum",
+	"title": "is Enumerator?",
+	"enum": [{
+	    "properties": {
+		"type": "radio",
+		"name": "enum1",
+		"value": "fr",
+		"id": "enum1-0"
+	    },
+	    "title": "FRUIT"
+	}, {
+	    "properties": {
+		"type": "radio",
+		"name": "enum1",
+		"value": "ap",
+		"id": "enum1-1"
+	    },
+	    "title": "APPLE"
+	}, {
+	    "properties": {
+		"type": "radio",
+		"name": "enum1",
+		"value": "bn",
+		"checked": true,
+		"id": "enum1-2"
+	    },
+	    "title": "BANAN"
+	}, {
+	    "properties": {
+		"type": "radio",
+		"name": "enum1",
+		"value": "ch",
+		"id": "enum1-3"
+	    },
+	    "title": "CHERY"
+	}]
+    }, {
+	"type": "select",
+	"title": "is Selector?",
+	"properties": {
+	    "name": "select1",
+	    "multiple": true
+	},
+	"list": [{
+	    "properties": {
+		"type": "option",
+		"title": "FRUIT",
+		"value": "fr"
+	    }
+	}, {
+	    "properties": {
+		"type": "option",
+		"title": "APPLE",
+		"value": "ap"
+	    }
+	}, {
+	    "properties": {
+		"type": "option",
+		"title": "BANAN",
+		"value": "bn",
+		"selected": true
+	    }
+	}, {
+	    "properties": {
+		"type": "option",
+		"title": "CHERY",
+		"value": "ch",
+		"disabled": true
+	    }
+	}]
+    }, {
+	"type": "submit",
+	"properties": {
+	    "type": "submit",
+	    "name": "submit",
+	    "id": "submit-test1",
+	    "value": "Submiting.."
+	}
+    }, {
+	"type": "reset",
+	"properties": {
+	    "type": "reset",
+	    "name": "reset",
+	    "id": "reset-test1",
+	    "value": "Reseting.."
+	}
+    }]
+}

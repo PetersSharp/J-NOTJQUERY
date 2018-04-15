@@ -1,67 +1,71 @@
 ## J - NOTJQUERY: ##
-Easy solution for the rapid creation of Web interfaces in embedded systems. This is a wrapper over basic JavaScript functions, not a framework.
-The main urge for the creation was the preservation of the usual Jquery syntax and getting rid of unnecessary functionality to minimize the library size.
-Also, a number of methods not included in the basic Jquery functionality were added.
+легкое решение для быстрого создания Вэб интерфейсов в встраиваемых системах. Это является оберткой над базовыми функциями JavaScript, а не фреймворком.
+Основным позывом к созданию послужило сохранение привычного синтаксиса Jquery и избавление от излишнего функционала для минимизации размера библиотеки.
+Так-же добавлен ряд методов не входящих в базовый функционал Jquery.
 
-### Features ###
+----------
 
-- does not have external dependencies, pure JavaScript ([ECMA](https://ru.wikipedia.org/wiki/ECMAScript))
-- method of using [templates](#exampleTemplateGetJSON) to update data.
-- method of automatically creating forms from an external source.
-- method of converting a form into an object.
-- includes [css](J.css) styles dashboard based on [https://github.com/mazipan/lightweight-admin-template/](https://github.com/mazipan/lightweight-admin-template/ "Lightweight admin template")
-- compact, <10Kb code size in the version of minification.
+### Возможности ###
 
-#### Jquery compatible features: ####
+- не имеет внешних зависимостей, чистый JavaScript ([ECMA](https://ru.wikipedia.org/wiki/ECMAScript))
+- метод использования [темплейтов](#exampleTemplateGetJSON) для обновления данных. 
+- метод автоматического создания форм из внешнего источника.
+- метод преобразования формы в объект.
+- включает [css](J.css) стили dashboard на базе [https://github.com/mazipan/lightweight-admin-template/](https://github.com/mazipan/lightweight-admin-template/ "Lightweight admin template")
+- компактный, < 10Kb размер кода в варианте минификации.
 
-extension of an object **String**
+----------
+
+#### Jquery совместимые функции: ####
+
+расширение объекта **String**
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
 | - | .ReplaceAll(patern, replace) | Глобальная замена patern на replace в строке |
 
-extension of an object **HTMLElement**
+расширение объекта **HTMLElement**
 
->methods with classes:
-
-|  Jquery | J  ||
-| ------------ | ------------ | ------------ |
-|   | .AddClass | Add class |
-|   | .RemoveClass | Delete class |
-|   | .ToggleClass | Toggle class |
-|   | .HasClass | Has is class |
-|   | .Css | Get css from element |
-
->methods HTML/Text:
+>работа с классами:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .empty | .Html() | Delete text in an element |
-| .html | .Html("text") | Overwrite text in an element |
-| .text | .Text() | Get text from an element |
-| .append (.insertBefore) | .Before("text") | Insert before the selected element |
-| .prepend (.insertAfter) | .After("text") | Insert after the selected element |
+|   | .AddClass | Добавить класс |
+|   | .RemoveClass | Удалить класс |
+|   | .ToggleClass | Переключить класс |
+|   | .HasClass | Имеет ли класс |
+|   | .Css | Получить css элемента |
 
->methods an objects HTMLElement:
-
-|  Jquery | J  ||
-| ------------ | ------------ | ------------ |
-| .ready | .Ready() | Wait for page load |
-| .fadeIn | .FadeIn() | Disappearing element |
-| .fadeOut | .FadeOut() | Appearance of an element |
-| .find  | .Find(tag/id) | Find from childs |
-| -  | .[Template](#exampleTemplate)(object) | Get the processed template from the data object |
-| -  | .[FormToObject](#exampleFormToObject)() | Get object from form data |
-| -  | .[ObjectToForm](#exampleObjectToForm)(data,style) | Create a form from the data [object data](/example/J-test-schema-1.json) and [object style](/example/J-test-styles-1.json) |
+>работа с HTML/текстом:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.[GetJSON](#exampleGetJSON)(url,callback) | Get object from remote Json data |
-| .ajax | J.[SendJSON](#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
+| .empty | .Html() | Удалить текст в элементе |
+| .html | .Html("текст") | Перезаписать текст в элементе |
+| .text | .Text() | Получить текст из элемента |
+| .append (.insertBefore) | .Before("текст") | Вставка перед выбранным элементом |
+| .prepend (.insertAfter) | .After("текст") | Вставка после выбранного элемента |
+
+>работа с объектом HTMLElement:
+
+|  Jquery | J  ||
+| ------------ | ------------ | ------------ |
+| .ready | .Ready() | Ожидать загрузки страницы |
+| .fadeIn | .FadeIn() | Исчезновение элемента |
+| .fadeOut | .FadeOut() | Появление элемента |
+| .find  | .Find(tag/id) | Найти среди потомков |
+| -  | .[Template](#exampleTemplate)(object) | Получить обработанный темплейт из данных object |
+| -  | .[FormToObject](#exampleFormToObject)() | Получить объект из данных формы |
+| -  | .[ObjectToForm](#exampleObjectToForm)(data,style) | Создать форму из данных [object data](/example/J-test-schema-1.json) и [object style](/example/J-test-styles-1.json) |
+
+|  Jquery | J  ||
+| ------------ | ------------ | ------------ |
+| .ajax | J.[GetJSON](#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
+| .ajax | J.[SendJSON](#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
 
 ----------
 
-### Examples ###
+### Примеры ###
 
 <a name="exampleGetJSON"></a>
 >GetJSON
@@ -197,3 +201,5 @@ JavaScript source:
 	});
 
 15.04.2018
+
+

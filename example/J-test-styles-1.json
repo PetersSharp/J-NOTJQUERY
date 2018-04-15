@@ -1,0 +1,14 @@
+{
+    "form": "form",
+    "group": "form__group",
+    "label": "form__label",
+    "rlabel": "form__label-required",
+    "xbox": "form__wrapper-box",
+    "string": "textfield textfield-shadow textfield-radius",
+    "text": "textfield textfield-shadow textfield-radius",
+    "boolean": "checkbox checkbox-blue",
+    "enum": "radio radio-blue",
+    "select": "select select-radius",
+    "submit": "button button-radius button-outline-blue",
+    "reset": "button button-radius button-outline-red"
+}
