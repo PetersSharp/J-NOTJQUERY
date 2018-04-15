@@ -390,7 +390,7 @@
                 if (__check_field(obj.properties, "type")) {
                     delete obj.properties.type;
                 }
-                __check_propid(obj, "textarea");
+                __check_propid(obj, "tarea");
 
                 return __add_label(
                     __create_ele("textarea", obj.properties, owner.FormBuilder.styles.text),
@@ -445,7 +445,7 @@
                     delete obj.properties.type;
                 }
 
-                __check_propid(obj, "select");
+                __check_propid(obj, "sel");
                 var ele  = __create_ele("select", obj.properties, owner.FormBuilder.styles.select);
 
                 for(var i = 0; i < obj.list.length; i++) {
@@ -502,6 +502,7 @@
                     case "select":  { field = __create_select(obj); break; }
                     case "hidden":  { field = __create_hidden(obj); break; }
                     case "button":  {
+                        __check_propid(obj, "btn");
                         obj.properties.type = "button";
                         field = __create_ele("input", obj.properties, owner.FormBuilder.styles.button);
                         break;
