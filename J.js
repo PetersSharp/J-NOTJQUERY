@@ -35,7 +35,7 @@
     };
 
     J.isUndefined = function (obj) {
-        return (typeof obj === typeof void 0);
+        return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
     };
 
     J.GetJSON = function (url, cb) {
