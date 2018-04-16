@@ -1,4 +1,8 @@
 
+/*
+    https://jigsaw.w3.org/css-validator/
+ */
+
 body {
   padding: 5px 10px 0px 10px;
   margin: 0;
@@ -65,8 +69,20 @@ html {
 .card-orange > .card__header,
 .card-gray > .card__header,
 .card-white > .card__header,
+.card-cyan > .card__header,
+.card-yellow > .card__header,
 .form__group,
-.grid__flex { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+.grid__flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    -ms-flex-pack: justify;
+    -ms-flex-align: center;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .select, .textfield { padding: 12px; margin: 3px 0; width: 100%; outline: none; border: 1px solid #CCC; border-radius: 0; }
 .select ::-moz-placeholder, .textfield ::-moz-placeholder { opacity: 1; color: #fff; }
@@ -253,6 +269,30 @@ html {
 .grid__col-4 { float: left; width: 100%; }
 @media (min-width: 768px) { .grid__col-4 { width: 33.33333%; } }
 .grid__offset-4 { margin-left: 33.33333%; }
+.grid__col-5 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-5 { width: 41.66667%; } }
+.grid__offset-5 { margin-left: 41.66667%; }
+.grid__col-6 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-6 { width: 50%; } }
+.grid__offset-6 { margin-left: 50%; }
+.grid__col-7 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-7 { width: 58.33333%; } }
+.grid__offset-7 { margin-left: 58.33333%; }
+.grid__col-8 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-8 { width: 66.66667%; } }
+.grid__offset-8 { margin-left: 66.66667%; }
+.grid__col-9 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-9 { width: 75%; } }
+.grid__offset-9 { margin-left: 75%; }
+.grid__col-10 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-10 { width: 83.33333%; } }
+.grid__offset-10 { margin-left: 83.33333%; }
+.grid__col-11 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-11 { width: 91.66667%; } }
+.grid__offset-11 { margin-left: 91.66667%; }
+.grid__col-12 { float: left; width: 100%; }
+@media (min-width: 768px) { .grid__col-12 { width: 100%; } }
+.grid__offset-12 { margin-left: 100%; }
 
 .content__wrapper {
     *zoom: 1;
