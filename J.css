@@ -149,6 +149,8 @@ html {
 .card__title { font-size: 1.6rem; font-weight: bold; }
 .card__tools > i { margin: 0 .5em; cursor: pointer; float: right; }
 .card__content { padding: 1em .5em; }
+.card__big-text { padding: 10px; }
+.card__align { text-align: -webkit-auto; }
 
 .button {
     display: inline-block;
@@ -232,7 +234,7 @@ html {
 .checkbox:checked + label:before { border-color: #000; background-color: #000; }
 .checkbox:checked + label:after { width: 8px; height: 13px; top: 6px; left: 1px; }
 .checkbox:disabled + label { color: #CCC; }
-.checkbox:disabled + label:before { border-color: #CCC; background-color: #F2F2F2; -webkit-box-shadow: none; box-shadow: none
+.checkbox:disabled + label:before { border-color: #CCC; background-color: #F2F2F2; -webkit-box-shadow: none; box-shadow: none; }
 .checkbox:disabled + label:after { display: none; }
 .checkbox-blue:checked + label:before { border-color: #0096D9; background-color: #0096D9; }
 
@@ -260,11 +262,9 @@ html {
 .content__wrapper:before, .content__wrapper:after { display: table; content: ' '; }
 .content__wrapper:after { clear: both; }
 
-.template-val  { left: 3px; }
-.template-name { left: 0px; }
-.template-desc { left: 1px; }
-
-#input-error { padding-left: 15px; }
+#in-error {
+    padding-left: 15px;
+}
 #stat-list {
     line-height: 1.8;
     padding-left: 10px;
