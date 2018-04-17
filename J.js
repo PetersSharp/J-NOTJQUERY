@@ -88,9 +88,38 @@
 
     /* J: HTMLElement extension */
 
+    if (!HTMLElement.prototype.On) {
+        HTMLElement.prototype.On = function (act, fun) {
+
+            if (J.isUndefined(this)) { return; }
+            if (!J.isUndefined(this.addEventListener)) {
+                this.addEventListener(act, fun, false);
+            } else if (!J.isUndefined(this.attachEvent)) {
+                this.attachEvent("on" + act, fun);
+            } else {
+                this["on" + act] = fun();
+            }
+        };
+    }
+
+    if (!HTMLElement.prototype.Off) {
+        HTMLElement.prototype.Off = function (act, fun) {
+
+            if (J.isUndefined(this)) { return; }
+            if (!J.isUndefined(this.removeEventListener)) {
+                this.removeEventListener(act, fun, false);
+            } else if (!J.isUndefined(this.detachEvent)) {
+                this.detachEvent("on" + act, fun);
+            } else {
+                this["on" + act] = null;
+            }
+        };
+    }
+
     if (!HTMLElement.prototype.FadeIn) {
         HTMLElement.prototype.FadeIn = function (display) {
 
+            if (J.isUndefined(this)) { return null; }
             var ele           = this;
             ele.style.opacity = 0;
             ele.style.display = display || "block";
@@ -109,6 +138,7 @@
     if (!HTMLElement.prototype.FadeOut) {
         HTMLElement.prototype.FadeOut = function () {
 
+            if (J.isUndefined(this)) { return null; }
             var ele           = this;
             ele.style.opacity = 1;
 
@@ -123,9 +153,24 @@
         };
     }
 
+    if (!HTMLElement.prototype.Css) {
+        HTMLElement.prototype.Css = function (str, val) {
+
+            if (J.isUndefined(this)) { return null; }
+            var style = getComputedStyle(this, null);
+            if ((J.isUndefined(str)) || (J.isUndefined(val))) {
+                return style;
+            }
+            style[str] = val;
+            this.setAttribute("style", style);
+            return style;
+        };
+    }
+
     if (!HTMLElement.prototype.AddClass) {
         HTMLElement.prototype.AddClass = function (name) {
 
+            if (J.isUndefined(this)) { return null; }
             if (this.classList) { this.classList.add(name); }
             else { this.className += ' ' + name; }
             return this;
@@ -135,6 +180,7 @@
     if (!HTMLElement.prototype.RemoveClass) {
         HTMLElement.prototype.RemoveClass = function (name) {
 
+            if (J.isUndefined(this)) { return null; }
             if (this.classList) { this.classList.remove(name); }
             return this;
         };
@@ -143,6 +189,7 @@
     if (!HTMLElement.prototype.ToggleClass) {
         HTMLElement.prototype.ToggleClass = function (name) {
 
+            if (J.isUndefined(this)) { return null; }
             if (this.classList) { this.classList.toggle(name); }
             return this;
         };
@@ -151,14 +198,34 @@
     if (!HTMLElement.prototype.HasClass) {
         HTMLElement.prototype.HasClass = function (name) {
 
+            if (J.isUndefined(this)) { return false; }
             if (this.classList) { return this.classList.contains(name); }
-            return null;
+            return false;
+        };
+    }
+
+    if (!HTMLElement.prototype.Hide) {
+        HTMLElement.prototype.Hide = function () {
+
+            if (J.isUndefined(this)) { return null; }
+            this.style.display = "none";
+            return this;
+        };
+    }
+
+    if (!HTMLElement.prototype.Show) {
+        HTMLElement.prototype.Show = function () {
+
+            if (J.isUndefined(this)) { return null; }
+            this.style.display = "block";
+            return this;
         };
     }
 
     if (!HTMLElement.prototype.Find) {
         HTMLElement.prototype.Find = function (name) {
 
+            if (J.isUndefined(this)) { return null; }
             return this.querySelectorAll(name);
         };
     }
@@ -166,14 +233,16 @@
     if (!HTMLElement.prototype.Html) {
         HTMLElement.prototype.Html = function (str) {
 
+            if (J.isUndefined(this)) { return null; }
             this.innerHTML = str || "";
-            return this;
+            return this.innerHTML;
         };
     }
 
     if (!HTMLElement.prototype.Text) {
         HTMLElement.prototype.Text = function () {
 
+            if (J.isUndefined(this)) { return null; }
             return this.textContent;
         };
     }
@@ -181,6 +250,7 @@
     if (!HTMLElement.prototype.Before) {
         HTMLElement.prototype.Before = function (str) {
 
+            if (J.isUndefined(this)) { return null; }
             this.insertAdjacentHTML("beforebegin", str);
             return this;
         };
@@ -189,21 +259,16 @@
     if (!HTMLElement.prototype.After) {
         HTMLElement.prototype.After = function (str) {
 
+            if (J.isUndefined(this)) { return null; }
             this.insertAdjacentHTML("afterend", str);
             return this;
-        };
-    }
-
-    if (!HTMLElement.prototype.Css) {
-        HTMLElement.prototype.Css = function (str) {
-
-            return getComputedStyle(this, null)[str];
         };
     }
 
     if (!String.prototype.ReplaceAll) {
         String.prototype.ReplaceAll = function (ptrn, str) {
 
+            if (J.isUndefined(this)) { return null; }
             return this.replace(new RegExp(ptrn, "g"), str);
         };
     }
@@ -211,6 +276,7 @@
     if (!HTMLElement.prototype.Template) {
         HTMLElement.prototype.Template = function (obj) {
 
+            if (J.isUndefined(this)) { return null; }
             var tmplateHtml = this.innerHTML;
 
             function __obj_iterate(data, tmpl, bkey) {

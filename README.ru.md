@@ -40,6 +40,8 @@
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
+| .hide |  .Hide() | Спрятать элемент |
+| .show |  .Show() | Показать элемент |
 | .empty | .Html() | Удалить текст в элементе |
 | .html | .Html("текст") | Перезаписать текст в элементе |
 | .text | .Text() | Получить текст из элемента |
@@ -53,6 +55,8 @@
 | $(id/class/tag) | J(id/class/tag) | Получить объект |
 | .ready | .Ready() | Ожидать загрузки страницы |
 | - | .isUndefined(object) | Тест объекта на undefined или null |
+| .on | .On(action,function) | Добавить следить за событием 'action' | 
+| .off | .Off(action,function) | Удалить слежку за событием 'action' | 
 | .fadeIn | .FadeIn() | Исчезновение элемента |
 | .fadeOut | .FadeOut() | Появление элемента |
 | .find  | .Find(tag/id) | Найти среди потомков |

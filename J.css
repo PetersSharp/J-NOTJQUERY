@@ -41,7 +41,8 @@ textarea { overflow: auto; }
 [type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
 ::-webkit-file-upload-button { -webkit-appearance: button; font: inherit; }
 
-[hidden] { display: none; }
+[hidden], .hidden { display: none; }
+
 html {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -59,7 +60,7 @@ html {
 .form__label { width: 20%; min-width: 100px; }
 .form__label-required:after { content: '*'; color: #F8011E; font-weight: bolder; }
 .form__icon { color: #000; background-color: #CCC; padding: 13px; }
-.form__icon-blue { color: #0096D9; background-color: #E0E0E0; font-weight: bold; padding: 13px; }
+.form__icon-blue { color: #0096D9; background-color: #E3F2FD; font-weight: bold; padding: 13px; }
 .form__icon-radius-left { border-top-left-radius: 0.25em; border-bottom-left-radius: 0.25em; }
 .form__icon-radius-right { border-top-right-radius: 0.25em; border-bottom-right-radius: 0.25em; }
 
@@ -167,6 +168,7 @@ html {
 .card__content { padding: 1em .5em; }
 .card__big-text { padding: 10px; }
 .card__align { text-align: -webkit-auto; }
+.card__fixed { min-height: 148px; }
 
 .button {
     display: inline-block;
@@ -305,14 +307,24 @@ html {
 #in-error {
     padding-left: 15px;
 }
-#stat-list {
+.template-style-list {
     line-height: 1.8;
     padding-left: 10px;
     display: inline-table;
 }
-#stat-list li {
+.template-style-list li {
     list-style: none;
     font-variant: small-caps;
+}
+
+.template-check-result {
+    font-weight: bold;
+}
+.template-check-result-OK {
+    color: #469E49;
+}
+.template-check-result-BLOCKED {
+    color: #D32F2F;
 }
 
 @keyframes fadeIn {

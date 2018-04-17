@@ -36,6 +36,8 @@ extension of an object **HTMLElement**
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
+| .hide |  .Hide() | Hide element |
+| .show |  .Show() | Show element |
 | .empty | .Html() | Delete text in an element |
 | .html | .Html("text") | Overwrite text in an element |
 | .text | .Text() | Get text from an element |
@@ -49,6 +51,8 @@ extension of an object **HTMLElement**
 | $(id/class/tag) | J(id/class/tag) | Get element by id/class/tag |
 | .ready | .Ready() | Wait for page load |
 | - | .isUndefined(object) | Test for undefined or null |
+| .on | .On(action,function) | Add event raising for 'action' | 
+| .off | .Off(action,function) | Remove event raising for 'action' | 
 | .fadeIn | .FadeIn() | Disappearing element |
 | .fadeOut | .FadeOut() | Appearance of an element |
 | .find  | .Find(tag/id) | Find from childs |
