@@ -239,6 +239,15 @@
         };
     }
 
+    if (!HTMLElement.prototype.HtmlAppend) {
+        HTMLElement.prototype.HtmlAppend = function (str) {
+
+            if (J.isUndefined(this)) { return null; }
+            this.innerHTML += str || "";
+            return this.innerHTML;
+        };
+    }
+
     if (!HTMLElement.prototype.Text) {
         HTMLElement.prototype.Text = function () {
 
