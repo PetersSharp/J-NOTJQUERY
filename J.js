@@ -69,9 +69,9 @@ window.J = (function (undefined) {
         return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
     },
     __setProp = function __setProp (arr, prop, value, isAppend) {
-      arr.forEach(el => {
-        if (isAppend) { el[prop] += value; }
-        else          { el[prop]  = value; }
+      arr.forEach(ele => {
+        if (isAppend) { ele[prop] += value; }
+        else          { ele[prop]  = value; }
       });
     },
     __replaceAll = function __replaceAll (src, ptrn, str) {
