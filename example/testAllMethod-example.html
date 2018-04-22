@@ -1,0 +1,208 @@
+<html lang="en" class="fa-events-icons-ready">
+    <head>
+        <title>Check DNS/URL/IP ::: st-Revizor filter</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <link href="https://raw.githubusercontent.com/PetersSharp/J-NOTJQUERY/master/J.css" media="all" rel="stylesheet"/>
+
+        <style type="text/css">
+.T0 { padding: 20px; font-size: x-large; background-color: black; }
+.T1 { color: #FF0000; }
+.T2 { color: #FFFF00; }
+.T3 { color: #FF00FF; }
+.CLK { cursor: pointer; padding: 3px; }
+        </style>
+
+<script id="template-list-download" type="text/template">
+  <li>
+    <a href="{{.url}}">{{.name}}</a>
+  </li>
+</script>
+
+    </head>
+    <body>
+
+        <div class="content__wrapper">
+            <div class="grid__row">
+                <div class="grid__col-7 card__content">
+
+                                <div class="alert alert-radius alert-red" id="in-warning" style="display: none;">
+                                  <div class="alert__close">
+                                    <i class="icon-cancel-circled" id="in-warnclose"></i>
+                                  </div>
+                                  <strong>TEST <span id="in-type-err"></span>:</br></strong><span id="in-error"></span>
+                                </div>
+
+        <div id="a1">a1</div>
+        <div id="a2" style="background-color: cornsilk;">a2</div>
+        <div id="a3">a3</div>
+        <div id="a4" class="T0">a4</div>
+        <div>
+            <b id="a4-show" class="CLK">Show</b>|
+            <b id="a4-hide" class="CLK">Hide</b>
+        </div>
+        <div>
+            <b id="a4-fadein" class="CLK">FadeIn</b>|
+            <b id="a4-fadeout" class="CLK">FadeOut</b>
+        </div>
+
+        <div id="create-test-form"></div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="alert alert-radius alert-gray">
+          <a href="https://github.com/PetersSharp/stRevizor" class="alert__close">i</a>
+          <strong>Test J method source</strong>
+        </div>
+
+        <script src="https://raw.githubusercontent.com/PetersSharp/J-NOTJQUERY/master/J.js" type="text/javascript"></script>
+        <script type="text/javascript">
+
+var tmplObj = {
+   f: [
+      {
+         name: "BLOCK LIST",
+         url: "http://bl/download/?1"
+      },
+      {
+         name: "PORT LIST",
+         url: "http://pl/download/?2"
+      },
+      {
+         name: "WHITE LIST",
+         url: "http://wl/download/?3"
+      }
+   ]
+};
+
+J.Ready(function () {
+        J("#a4").Html("I'm Ready!");
+
+        J("#a1").Html("ooooooooooooxxxxx!");
+        J("#a2").Css("color", "#F44336");
+
+        J.fn.GetJSON("http://ip.jsontest.com/", console.log.bind(console));
+
+        var a3 = J("#a3");
+        a3.Html("yyyyyyyyyyyyyyyyyxxxxx!");
+        a3.HtmlAppend(" - ooooooooxxxxx!");
+
+        console.log(".Prev", J("#in-warnclose").Prev());
+        console.log(".Next", J("#in-warnclose").Next());
+        console.log(".Parent", J("#in-warnclose").Parent());
+        console.log(".Parent.Parent", J("#in-warnclose").Parent().Parent());
+
+        console.log(".Children", J("#in-warning").Children());
+
+        console.log(".Parent ele", J("#in-warnclose").Parent("#in-warning"));
+        console.log(".Prev ele", J("#in-warnclose").Prev("#in-warning"));
+
+        var a4 = J("#a4");
+
+        console.log("HasClass(T0)",   a4.HasClass("T0"));
+        console.log("HasClass(T3) 1", a4.HasClass("T3"));
+        a4.AddClass("T3");
+        console.log("HasClass(T3) 2", a4.HasClass("T3"));
+        console.log("HasClass(T0) 2", a4.HasClass("T0"));
+        a4.RemoveClass("T3");
+        a4.AddClass("T2");
+        console.log("HasClass(T3) 3", a4.HasClass("T3"));
+        console.log("HasClass(T2) 3", a4.HasClass("T2"));
+        console.log("J.fn.", J.fn);
+
+        console.log(".Template Single", J("#template-list-download").Template({ name: "URL CACHE", url: "http://kyi.org/" }));
+        console.log(".Template for All",J("#template-list-download").Template(tmplObj.f));
+
+        J("#a4-show").Click(function () {
+            J("#a4").Show();
+        });
+        J("#a4-hide").On("click", function () {
+            J("#a4").Hide();
+        });
+        J("#a4-fadein").Click(function () {
+            J("#a4").FadeIn();
+        });
+        J("#a4-fadeout").Click(function () {
+            J("#a4").FadeOut();
+        });
+
+        J("#a1").HtmlReplace("xxx", "WWW");
+});
+
+        </script>
+        <script type="text/javascript">
+
+    J("#create-test-form").ObjectToForm(
+	/* Object form data */
+	{
+	    title: "This New Form",
+	    properties: { name: "form2", id: "form-2" },
+	    form: [
+	    {
+	        type: "string", title: "First Name",  required: 1,
+	            properties: { type: "text", name: "str1", id: "str1-id", class: "textfield textfield-shadow", placeholder: "I'm placeholder 1" }
+	    },{
+	        type: "string", title: "No param",
+	            properties: { name: "str2" }
+	    },{
+	        type: "text", title: "Descripton for Name",
+	            properties: { name: "txtarea1", id: "txtarea1-id", class: "textfield textfield-shadow textfield-radius", rows: 3, placeholder: "I'm placeholder textarea" }
+	    },{
+	        type: "boolean", title: "is Yes/No checkbox?",
+	            properties: { name: "chk1", title: "you Answer?", checked: true }
+	    },{
+	        type: "enum", title: "is Enumerator?",
+                enum: [
+                    { properties: { name: "enum1", title: "FRUIT", value: "fr" }},
+                    { properties: { name: "enum1", title: "APPLE", value: "ap" }},
+                    { properties: { name: "enum1", title: "BANAN", value: "bn", checked: true }},
+                    { properties: { name: "enum1", title: "CHERY", value: "ch" }}
+                ]
+	    },{
+	        type: "select", title: "is Selector?",
+	            properties: { name: "select1", multiple: true },
+	            list: [
+	                { properties: { title: "FRUIT", value: "fr" }},
+	                { properties: { title: "APPLE", value: "ap" }},
+	                { properties: { title: "BANAN", value: "bn", selected: true }},
+	                { properties: { title: "CHERY", value: "ch", disabled: true }}
+	            ]
+	    },{
+	        type: "hidden",
+	            properties: { value: "0987654321" }
+	    },{
+	        type: "submit",
+	            properties: { name: "submit", id: "submit-id1", value: "Submiting.." }
+	    },{
+	        type: "reset",
+	            properties: { name: "reset", id: "reset-id1", value: "Reseting.." }
+        }],
+        onsubmit: function(event, form, data) {
+                console.log("Data submiting:", data);
+                return false;
+        }
+    },{
+	/* Object css styles class name */
+        form:    "form",
+        group:   "form__group",
+        label:   "form__label",
+        rlabel:  "form__label-required",
+        xbox:    "form__wrapper-box",
+        string:  "textfield textfield-shadow textfield-radius",
+        text:    "textfield textfield-shadow textfield-radius",
+        boolean: "checkbox checkbox-blue",
+        enum:    "radio radio-blue",
+        select:  "select select-radius",
+        button:  "button button-outline-blue",
+        submit:  "button button-radius button-outline-blue",
+        reset:   "button button-radius button-outline-red"
+    });
+        </script>
+
+    </body>
+</html>

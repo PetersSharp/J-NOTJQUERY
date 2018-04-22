@@ -14,15 +14,20 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
 #### Jquery compatible features: ####
 
-extension of an object **String**
+>methods with DOM tree:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| - | .ReplaceAll(pattern, replace) | Global 'pattern' replacement with 'replace' in a string |
+| .append (.insertBefore) | .Before(HTMLelement) | Insert before the selected element |
+| .prepend (.insertAfter) | .After(HTMLelement) | Insert after the selected element |
+| - | .Find("selector") | Find HTML element from tree |  
+| - | .Filter("selector") | Filtred HTML element from tree |   
+| - | .Next("selector") | Next HTML element from tree |
+| - | .Prev("selector") | Prev HTML element from tree |
+| - | .Parent("selector") | Parent HTML element from tree |
+| - | .Children("selector") | Children HTML element from tree |
 
-extension of an object **HTMLElement**
-
->methods with classes:
+>methods with classes and styles:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
@@ -36,13 +41,11 @@ extension of an object **HTMLElement**
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .hide |  .Hide() | Hide element |
-| .show |  .Show() | Show element |
-| .empty | .Html() | Delete text in an element |
 | .html | .Html("text") | Overwrite text in an element |
-| .text | .Text() | Get text from an element |
-| .append (.insertBefore) | .Before("text") | Insert before the selected element |
-| .prepend (.insertAfter) | .After("text") | Insert after the selected element |
+| - | .HtmlAppend("text") | Append text in an element |
+| - | .HtmlReplace(pattern, replace) | Replace 'pattern' to 'replace' in the text of the element |
+| .empty | .HtmlEmpty() | Delete text in an element |
+| .text | .Text() | Get/Set text from an element |
 
 >methods an objects HTMLElement:
 
@@ -53,6 +56,8 @@ extension of an object **HTMLElement**
 | - | .isUndefined(object) | Test for undefined or null |
 | .on | .On(action,function) | Add event raising for 'action' | 
 | .off | .Off(action,function) | Remove event raising for 'action' | 
+| .hide |  .Hide() | Hide element |
+| .show |  .Show() | Show element |
 | .fadeIn | .FadeIn() | Disappearing element |
 | .fadeOut | .FadeOut() | Appearance of an element |
 | .find  | .Find(tag/id) | Find from childs |
@@ -64,8 +69,8 @@ extension of an object **HTMLElement**
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.[GetJSON](README.md#exampleGetJSON)(url,callback) | Get object from remote Json data |
-| .ajax | J.[SendJSON](README.md#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
+| .ajax | J.fn.[GetJSON](README.md#exampleGetJSON)(url,callback) | Get object from remote Json data |
+| .ajax | J.fn.[SendJSON](README.md#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
 
 ----------
 
@@ -75,7 +80,7 @@ extension of an object **HTMLElement**
 >GetJSON
 
     J.Ready(function () {
-		J.GetJSON("http://ip.jsontest.com/", console.log.bind(console));
+		J.fn.GetJSON("http://ip.jsontest.com/", console.log.bind(console));
 	});
 
 
@@ -84,7 +89,7 @@ extension of an object **HTMLElement**
 
 	var data = { id: 1, other: "test" };
     J.Ready(function () {
-		J.SendJSON("http://send.test.com/", data, console.log.bind(console));
+		J.fn.SendJSON("http://send.test.com/", data, console.log.bind(console));
 	});
 
 <a name="exampleFormToObject"></a>
@@ -105,10 +110,10 @@ extension of an object **HTMLElement**
 		    properties: { name: "form2", id: "form-2" },
 		    form: [
 		    {
-		        type: "sring", title: "First Name",  required: 1,
+		        type: "string", title: "First Name",  required: 1,
 		            properties: { type: "text", name: "str1", id: "str1-id", class: "textfield textfield-shadow", placeholder: "I'm placeholder 1" }
 		    },{
-		        type: "sring", title: "No param",
+		        type: "string", title: "No param",
 		            properties: { name: "str2" }
 		    },{
 		        type: "text", title: "Descripton for Name",
@@ -184,18 +189,18 @@ HTML source:
 JavaScript source:
 
         J("#txt-template").Html(
-            J("#template-list-item").Template(
+            J("#template-list-item").Template([
 				{ url: "one.org/1.html", p: { name: "Andy", city: "TownCity", info: "extended info" }},
 				{ url: "one.org/2.html", p: { name: "Angry", city: "MiniCity", info: "no info" }},
 				{ url: "one.org/3.html", p: { name: "Beer", city: "BeerCity", info: "" }}
-			)
+			])
         );
 
 <a name="exampleTemplateGetJSON"></a>
 >Template && GetJSON remote data
 
     J.Ready(function () {
-		J.GetJSON("http://site.com/",
+		J.fn.GetJSON("http://site.com/",
 			function (data, status) {
 			    if (status) {
 			        J("#txt-template").Html(

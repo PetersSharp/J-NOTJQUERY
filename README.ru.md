@@ -18,15 +18,20 @@
 
 #### Jquery совместимые функции: ####
 
-расширение объекта **String**
+>methods with DOM tree:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| - | .ReplaceAll(pattern, replace) | Глобальная замена 'pattern' на 'replace' в строке |
+| .append (.insertBefore) | .Before("текст") | Вставка перед выбранным элементом |
+| .prepend (.insertAfter) | .After("текст") | Вставка после выбранного элемента |
+| - | .Find("selector") | Поск HTML элемента в DOM дереве |
+| - | .Filter("selector") | Отфильтровать HTML элементы в DOM дереве |   
+| - | .Next("selector") | Следующий HTML элемент в DOM дереве |
+| - | .Prev("selector") | Предыдущий HTML элемента в DOM дереве |
+| - | .Parent("selector") | Родитель HTML элемента |
+| - | .Children("selector") | Потомки HTML элемента |
 
-расширение объекта **HTMLElement**
-
->работа с классами:
+>работа с классами и стилями:
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
@@ -40,13 +45,11 @@
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .hide |  .Hide() | Спрятать элемент |
-| .show |  .Show() | Показать элемент |
-| .empty | .Html() | Удалить текст в элементе |
 | .html | .Html("текст") | Перезаписать текст в элементе |
+| - | .HtmlAppend("text") | Добавить текст в элемент |
+| - | .HtmlReplace(pattern, replace) | Заменить 'pattern' на 'replace' в тексте элемента |
+| .empty | .HtmlEmpty() | Удалить текст в элементе |
 | .text | .Text() | Получить текст из элемента |
-| .append (.insertBefore) | .Before("текст") | Вставка перед выбранным элементом |
-| .prepend (.insertAfter) | .After("текст") | Вставка после выбранного элемента |
 
 >работа с объектом HTMLElement:
 
@@ -57,6 +60,8 @@
 | - | .isUndefined(object) | Тест объекта на undefined или null |
 | .on | .On(action,function) | Добавить следить за событием 'action' | 
 | .off | .Off(action,function) | Удалить слежку за событием 'action' | 
+| .hide |  .Hide() | Спрятать элемент |
+| .show |  .Show() | Показать элемент |
 | .fadeIn | .FadeIn() | Исчезновение элемента |
 | .fadeOut | .FadeOut() | Появление элемента |
 | .find  | .Find(tag/id) | Найти среди потомков |
@@ -68,8 +73,8 @@
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.[GetJSON](README.ru.md#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
-| .ajax | J.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
+| .ajax | J.fn.[GetJSON](README.ru.md#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
+| .ajax | J.fn.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
 
 ----------
 
@@ -79,7 +84,7 @@
 >GetJSON
 
     J.Ready(function () {
-		J.GetJSON("http://ip.jsontest.com/", console.log.bind(console));
+		J.fn.GetJSON("http://ip.jsontest.com/", console.log.bind(console));
 	});
 
 
@@ -88,7 +93,7 @@
 
 	var data = { id: 1, other: "test" };
     J.Ready(function () {
-		J.SendJSON("http://send.test.com/", data, console.log.bind(console));
+		J.fn.SendJSON("http://send.test.com/", data, console.log.bind(console));
 	});
 
 <a name="exampleFormToObject"></a>
@@ -109,10 +114,10 @@
 		    properties: { name: "form2", id: "form-2" },
 		    form: [
 		    {
-		        type: "sring", title: "First Name",  required: 1,
+		        type: "string", title: "First Name",  required: 1,
 		            properties: { type: "text", name: "str1", id: "str1-id", class: "textfield textfield-shadow", placeholder: "I'm placeholder 1" }
 		    },{
-		        type: "sring", title: "No param",
+		        type: "string", title: "No param",
 		            properties: { name: "str2" }
 		    },{
 		        type: "text", title: "Descripton for Name",
@@ -188,18 +193,18 @@ HTML source:
 JavaScript source:
 
         J("#txt-template").Html(
-            J("#template-list-item").Template(
+            J("#template-list-item").Template([
 				{ url: "one.org/1.html", p: { name: "Andy", city: "TownCity", info: "extended info" }},
 				{ url: "one.org/2.html", p: { name: "Angry", city: "MiniCity", info: "no info" }},
 				{ url: "one.org/3.html", p: { name: "Beer", city: "BeerCity", info: "" }}
-			)
+			])
         );
 
 <a name="exampleTemplateGetJSON"></a>
 >Template && GetJSON remote data
 
     J.Ready(function () {
-		J.GetJSON("http://site.com/",
+		J.fn.GetJSON("http://site.com/",
 			function (data, status) {
 			    if (status) {
 			        J("#txt-template").Html(
