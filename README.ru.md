@@ -57,7 +57,7 @@
 | ------------ | ------------ | ------------ |
 | $(id/class/tag) | J(id/class/tag) | Получить объект |
 | .ready | .Ready() | Ожидать загрузки страницы |
-| - | .isUndefined(object) | Тест объекта на undefined или null |
+| - | J.fn.isUndefined(object) | Тест объекта на undefined или null |
 | .on | .On(action,function) | Добавить следить за событием 'action' | 
 | .off | .Off(action,function) | Удалить слежку за событием 'action' | 
 | .hide |  .Hide() | Спрятать элемент |

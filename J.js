@@ -1,4 +1,8 @@
 
+    /* J: NOJQUERY mini wrapper for syntax command
+        https://github.com/PetersSharp/
+     */
+
     if (typeof window.J !== "undefined") {
         throw ("J global variable already exists");
     }
@@ -20,19 +24,10 @@ window.J = (function (undefined) {
         TEXT:     "text",
         ENUM:     "enum",
         FORM:     "FORM",
-        NAME:     "name",
-        ID:       "id",
-        TYPE:     "type",
-        FOR:      "for",
-        TEXT:     "text",
-        STYLE:    "style",
-        CLASS:    "class",
-        GROUP:    "group",
-        LABEL:    "label",
-        TITLE:    "title",
-        OPTION:   "option",
-        VALUE:    "value",
-        HIDDEN:   "hidden"
+    },
+    STYLE = {
+        SHOW: "block",
+        HIDE: "none"
     },
     ELEMENT = {
         DIV:      "div",
@@ -48,19 +43,30 @@ window.J = (function (undefined) {
         RESET:    "reset",
         SUBMIT:   "submit"
     },
-    STYLE = {
-        SHOW: "block",
-        HIDE: "none"
-    },
     PROPERTY = {
         DISPLAY: "display",
         ONEVENT: "on",
         INNER:   "innerHTML",
-        VALUE:   "value",
-        TEXTCTX: "textContent"
+        TEXTCTX: "textContent",
+        NAME:     "name",
+        ID:       "id",
+        TYPE:     "type",
+        FOR:      "for",
+        TEXT:     "text",
+        STYLE:    "style",
+        CLASS:    "class",
+        GROUP:    "group",
+        LABEL:    "label",
+        TITLE:    "title",
+        OPTION:   "option",
+        VALUE:    "value",
+        HIDDEN:   "hidden"
     },
     EVENT = {
         CLICK: "click"
+    },
+    __isUndefined = function __isUndefined (obj) {
+        return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
     },
     __setProp = function __setProp (arr, prop, value, isAppend) {
       arr.forEach(el => {
@@ -92,14 +98,11 @@ window.J = (function (undefined) {
 
   prototype = {
 
-    isUndefined (obj) {
-        return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
-    },
     Has (ele) {
       return Array.from(this).includes(ele);
     },
     Add (ele) {
-      var eles = ((!this.isUndefined(ele.length)) ? ele : [ele]);
+      var eles = ((!__isUndefined(ele.length)) ? ele : [ele]);
 
       Array.from(eles).forEach(ele => {
         if (ele && !this.Has(ele)) {
@@ -177,8 +180,8 @@ window.J = (function (undefined) {
         return this;
     },
     HasClass (cn) {
-        return ((!this.isUndefined(this[0])) ?
-                ((!this.isUndefined(this[0].classList)) ?
+        return ((!__isUndefined(this[0])) ?
+                ((!__isUndefined(this[0].classList)) ?
                   this[0].classList.contains(cn) : false) : false
         );
     },
@@ -196,7 +199,7 @@ window.J = (function (undefined) {
         return this.Html(__replaceAll(this[0][PROPERTY.INNER], ptrn, str), false);
     },
     HtmlEmpty () {
-        return this.Html("", false);
+        return this.Html(" ", false);
     },
     Text (src, isAppend = false) {
         if (!src) {
@@ -260,9 +263,9 @@ window.J = (function (undefined) {
     },
     On (ev, fun, opt = false) {
         Array.from(this).forEach(ele => {
-            if (!this.isUndefined(ele.addEventListener)) {
+            if (!__isUndefined(ele.addEventListener)) {
                 ele.addEventListener(ev, fun, opt);
-            } else if (!this.isUndefined(ele.attachEvent)) {
+            } else if (!__isUndefined(ele.attachEvent)) {
                 ele.attachEvent(PROPERTY.ONEVENT + ev, fun);
             } else {
                 ele[PROPERTY.ONEVENT + ev] = fun();
@@ -272,9 +275,9 @@ window.J = (function (undefined) {
     },
     Off (ev, fun, opt = false) {
         Array.from(this).forEach(ele => {
-            if (!this.isUndefined(ele.removeEventListener)) {
+            if (!__isUndefined(ele.removeEventListener)) {
                 ele.removeEventListener(ev, fun, opt);
-            } else if (!this.isUndefined(ele.detachEvent)) {
+            } else if (!__isUndefined(ele.detachEvent)) {
                 ele.detachEvent(PROPERTY.ONEVENT + ev, fun);
             } else {
                 ele[PROPERTY.ONEVENT + ev] = null;
@@ -320,12 +323,12 @@ window.J = (function (undefined) {
         return this;
     },
     Template (obj) {
-        if ((this.isUndefined(this[0])) ||
-            (this.isUndefined(this[0][PROPERTY.INNER]))) { return null; }
+        if ((__isUndefined(this[0])) ||
+            (__isUndefined(this[0][PROPERTY.INNER]))) { return null; }
 
         var tmpl = this[0][PROPERTY.INNER];
 
-        if (this.isUndefined(obj.length)) {
+        if (__isUndefined(obj.length)) {
             return __getTemplate(tmpl, obj);
         }
         if (!obj.length) { return null; }
@@ -336,9 +339,9 @@ window.J = (function (undefined) {
         return otmpl;
     },
     FormToObject () {
-        if ((this.isUndefined(this[0]))          ||
-            (this.isUndefined(this[0].nodeName)) ||
-            (this[0].nodeName !== TYPE.FORM)     ||
+        if ((__isUndefined(this[0]))          ||
+            (__isUndefined(this[0].nodeName)) ||
+            (this[0].nodeName !== PROPERTY.FORM)     ||
             (!this[0].elements.length)) { return null; }
 
         var skipName = function(ele) {
@@ -357,7 +360,7 @@ window.J = (function (undefined) {
             if ([ELEMENT.SELECTM].indexOf(eles[i].type) != -1) {
                 for(var n = (eles[i].options.length - 1); n >= 0; n--) {
                     if (eles[i].options[n].selected) {
-                        if (this.isUndefined(obj[eles[i].name])) {
+                        if (__isUndefined(obj[eles[i].name])) {
                             obj[eles[i].name] = [];
                         }
                         if (obj[eles[i].name].indexOf(eles[i].options[n].value) == -1) {
@@ -372,36 +375,36 @@ window.J = (function (undefined) {
         return obj;
     },
     ObjectToForm (obj, styles) {
-        if ((this.isUndefined(this[0])) ||
+        if ((__isUndefined(this[0])) ||
             (typeof(obj) !== TYPE.OBJ)  ||
             (typeof(styles) !== TYPE.OBJ)) { return this; }
 
-        var root = this, owner = this[0];
+        var owner = this[0];
         owner.FormBuilder = { form: null, onsubmit: null, cnt: 0, obj: obj, styles: styles };
 
             var __check_title = function(obj) {
-                return (((root.isUndefined(obj.title)) || (!obj.title)) ? false : true);
+                return (((__isUndefined(obj.title)) || (!obj.title)) ? false : true);
             }
             var __check_properties = function(obj) {
-                return (((root.isUndefined(obj.properties)) ||
-                         (root.isUndefined(obj.properties.title)) ||
+                return (((__isUndefined(obj.properties)) ||
+                         (__isUndefined(obj.properties.title)) ||
                          (!obj.properties.title)) ? false : true);
             }
             var __check_propid = function(obj, eletype) {
-                if (!__check_field(obj.properties, TYPE.NAME)) {
+                if (!__check_field(obj.properties, PROPERTY.NAME)) {
                     obj.properties.name = eletype + "-" + owner.FormBuilder.cnt;
                 }
-                if (!__check_field(obj.properties, TYPE.ID)) {
+                if (!__check_field(obj.properties, PROPERTY.ID)) {
                     obj.properties.id = obj.properties.name;
                 }
             }
             var __check_array = function(arr) {
-                return (((root.isUndefined(arr)) ||
+                return (((__isUndefined(arr)) ||
                          (!Array.isArray(arr))        ||
                          (!arr.length))  ? false : true);
             }
             var __check_field = function(obj, key) {
-                return (((root.isUndefined(obj[key])) ||
+                return (((__isUndefined(obj[key])) ||
                          (!obj[key])) ? false : true);
             }
             var __add_class = function(ele, aclass) {
@@ -418,9 +421,9 @@ window.J = (function (undefined) {
                 for (var key in properties) {
                     if (properties.hasOwnProperty(key)) {
                         if (!properties[key]) { continue; }
-                        if (key === TYPE.STYLE)  {
+                        if (key === PROPERTY.STYLE)  {
                             ele.style.cssText = properties[key];
-                        } else if (key === TYPE.CLASS)  {
+                        } else if (key === PROPERTY.CLASS)  {
                             __add_class(ele, properties[key]);
                         } else  {
                             ele.setAttribute(key, properties[key]);
@@ -429,7 +432,7 @@ window.J = (function (undefined) {
                 }
                 if (
                     (dstyle) &&
-                    (!__check_field(properties, TYPE.CLASS))
+                    (!__check_field(properties, PROPERTY.CLASS))
                    ) { __add_class(ele, dstyle); }
 
                 return ele;
@@ -440,13 +443,13 @@ window.J = (function (undefined) {
                 var div1 = document.createElement(ELEMENT.DIV),
                     div2 = document.createElement(ELEMENT.DIV);
 
-                if (__check_field(owner.FormBuilder.styles, TYPE.GROUP)) {
+                if (__check_field(owner.FormBuilder.styles, PROPERTY.GROUP)) {
                     __add_class(div1, owner.FormBuilder.styles.group);
                 }
-                if (__check_field(owner.FormBuilder.styles, TYPE.LABEL)) {
+                if (__check_field(owner.FormBuilder.styles, PROPERTY.LABEL)) {
                     __add_class(div2, owner.FormBuilder.styles.label);
                 }
-                if (!root.isUndefined(obj.required)) {
+                if (!__isUndefined(obj.required)) {
                     __add_class(div2, owner.FormBuilder.styles.rlabel);
                 }
                 div2.appendChild(
@@ -462,29 +465,29 @@ window.J = (function (undefined) {
                 return ele;
             }
             var __create_xele = function(ele, obj, dstyle) {
-                var lb = document.createElement(TYPE.LABEL);
+                var lb = document.createElement(PROPERTY.LABEL);
 
-                if (__check_field(obj.properties, TYPE.TITLE)) {
+                if (__check_field(obj.properties, PROPERTY.TITLE)) {
                     lb.appendChild(
                         document.createTextNode(obj.properties.title)
                     );
                     delete obj.properties.title;
                 }
-                if (!__check_field(obj.properties, TYPE.ID)) {
-                    if (__check_field(obj.properties, TYPE.NAME)) {
-                        obj.properties.id = obj.properties.name + "-" + TYPE.ID;
+                if (!__check_field(obj.properties, PROPERTY.ID)) {
+                    if (__check_field(obj.properties, PROPERTY.NAME)) {
+                        obj.properties.id = obj.properties.name + "-" + PROPERTY.ID;
                     } else {
-                        obj.properties.id = obj.properties.type + "-" + TYPE.ID;
+                        obj.properties.id = obj.properties.type + "-" + PROPERTY.ID;
                     }
                 }
-                lb.setAttribute(TYPE.FOR, obj.properties.id);
+                lb.setAttribute(PROPERTY.FOR, obj.properties.id);
                 var el = __create_ele(ELEMENT.INPUT, obj.properties, dstyle);
                 ele.appendChild(el);
                 ele.appendChild(lb);
                 return ele;
             }
             var __create_string = function(obj) {
-                var type = ((__check_field(obj.properties, TYPE.TYPE)) ? obj.properties.type : TYPE.TEXT);
+                var type = ((__check_field(obj.properties, PROPERTY.TYPE)) ? obj.properties.type : PROPERTY.TEXT);
                 obj.properties.type = type;
                 __check_propid(obj, type);
 
@@ -494,7 +497,7 @@ window.J = (function (undefined) {
                 );
             }
             var __create_text = function(obj) {
-                if (__check_field(obj.properties, TYPE.TYPE)) {
+                if (__check_field(obj.properties, PROPERTY.TYPE)) {
                     delete obj.properties.type;
                 }
                 __check_propid(obj, ELEMENT.TEXTAREA);
@@ -531,7 +534,7 @@ window.J = (function (undefined) {
                     if (!__check_properties(obj.enum[i])) {
                         continue;
                     }
-                    if (!__check_field(obj.enum[i].properties, TYPE.NAME)) {
+                    if (!__check_field(obj.enum[i].properties, PROPERTY.NAME)) {
                         obj.enum[i].properties.name = ELEMENT.RADIO + "-" + owner.FormBuilder.cnt;
                     }
 
@@ -548,7 +551,7 @@ window.J = (function (undefined) {
                 if (!__check_array(obj.list)) {
                     return null;
                 }
-                if (__check_field(obj.properties, TYPE.TYPE)) {
+                if (__check_field(obj.properties, PROPERTY.TYPE)) {
                     delete obj.properties.type;
                 }
 
@@ -560,35 +563,35 @@ window.J = (function (undefined) {
 
                     var mobj  = {},
                         title = (
-                            ((root.isUndefined(obj.list[i].properties.title)) || (!obj.list[i].properties.title)) ?
+                            ((__isUndefined(obj.list[i].properties.title)) || (!obj.list[i].properties.title)) ?
                                 ("_" + i) : obj.list[i].properties.title
                     );
                     mobj.value = (
-                        ((root.isUndefined(obj.list[i].properties.value)) || (!obj.list[i].properties.value)) ?
+                        ((__isUndefined(obj.list[i].properties.value)) || (!obj.list[i].properties.value)) ?
                             title : obj.list[i].properties.value
                     );
-                    if (!root.isUndefined(obj.list[i].properties.selected)) {
+                    if (!__isUndefined(obj.list[i].properties.selected)) {
                         mobj.selected = true;
                     }
-                    if (!root.isUndefined(obj.list[i].properties.disabled)) {
+                    if (!__isUndefined(obj.list[i].properties.disabled)) {
                         mobj.disabled = true;
                     }
 
-                    var opt = __create_ele(TYPE.OPTION, mobj, null);
+                    var opt = __create_ele(PROPERTY.OPTION, mobj, null);
                     opt.appendChild(document.createTextNode(title));
                     ele.appendChild(opt);
                 }
                 return __add_label(ele, obj);
             }
             var __create_hidden = function(obj) {
-                if (!__check_field(obj.properties, TYPE.VALUE)) {
+                if (!__check_field(obj.properties, PROPERTY.VALUE)) {
                     return null;
                 }
-                if (__check_field(obj.properties, TYPE.CLASS)) {
+                if (__check_field(obj.properties, PROPERTY.CLASS)) {
                     delete obj.properties.class;
                 }
 
-                obj.properties.type = TYPE.HIDDEN;
+                obj.properties.type = PROPERTY.HIDDEN;
                 __check_propid(obj, obj.properties.type);
                 return __create_ele(ELEMENT.INPUT, obj.properties, null);
             }
@@ -602,13 +605,13 @@ window.J = (function (undefined) {
                 var field;
                 switch(obj.type)
                 {
-                    case TYPE.STRING:    { field = __create_string(obj); break; }
-                    case TYPE.TEXT:      { field = __create_text(obj);   break; }
-                    case TYPE.BOOL:      { field = __create_bool(obj);   break; }
-                    case TYPE.ENUM:      { field = __create_enum(obj);   break; }
-                    case ELEMENT.SELECT: { field = __create_select(obj); break; }
-                    case TYPE.HIDDEN:    { field = __create_hidden(obj); break; }
-                    case ELEMENT.BUTTON: {
+                    case TYPE.STRING:     { field = __create_string(obj); break; }
+                    case PROPERTY.TEXT:   { field = __create_text(obj);   break; }
+                    case TYPE.BOOL:       { field = __create_bool(obj);   break; }
+                    case TYPE.ENUM:       { field = __create_enum(obj);   break; }
+                    case ELEMENT.SELECT:  { field = __create_select(obj); break; }
+                    case PROPERTY.HIDDEN: { field = __create_hidden(obj); break; }
+                    case ELEMENT.BUTTON:  {
                         __check_propid(obj, ELEMENT.BUTTON);
                         obj.properties.type = ELEMENT.BUTTON;
                         field = __create_ele(ELEMENT.INPUT, obj.properties, owner.FormBuilder.styles.button);
@@ -632,8 +635,8 @@ window.J = (function (undefined) {
 
         if (!__check_array(owner.FormBuilder.obj.form)) { return owner; }
 
-        owner.FormBuilder.form = document.createElement(TYPE.FORM);
-        if (this.isUndefined(owner.FormBuilder.obj.properties)) {
+        owner.FormBuilder.form = document.createElement(PROPERTY.FORM);
+        if (__isUndefined(owner.FormBuilder.obj.properties)) {
             __add_class(
                 owner.FormBuilder.form,
                 owner.FormBuilder.styles.form
@@ -645,7 +648,7 @@ window.J = (function (undefined) {
                 owner.FormBuilder.styles.form
             );
         }
-        if (__check_field(owner.FormBuilder.obj, TYPE.TITLE)) {
+        if (__check_field(owner.FormBuilder.obj, PROPERTY.TITLE)) {
             var h3 = document.createElement(ELEMENT.H3);
             h3.appendChild(
                 document.createTextNode(owner.FormBuilder.obj.title)
@@ -674,7 +677,7 @@ window.J = (function (undefined) {
                     owner.FormBuilder.form,
                     J([owner.FormBuilder.form]).FormToObject()
             );
-            return ((root.isUndefined(result)) ? false : result);
+            return ((__isUndefined(result)) ? false : result);
         };
         return owner;
     }
@@ -707,9 +710,12 @@ J.fn = {
         SNDERR:  "Send error",
         STRCODE: ", code: "
     },
+    isUndefined: function isUndefined (obj) {
+        return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
+    },
     GetJSON: function GetJSON (url, cb) {
         if (!window.XMLHttpRequest) {
-            cb(ERRORS.NOTSUP, false);
+            cb(J.fn.ERRORS.NOTSUP, false);
             return;
         }
         var request = new XMLHttpRequest();
@@ -720,34 +726,34 @@ J.fn = {
                 try {
                     data = JSON.parse(request.responseText);
                 } catch(e) {
-                    cb(ERRORS.REQERR + e, false)
+                    cb(J.fn.ERRORS.REQERR + e, false)
                 }
-                ((data == null) ? cb(ERRORS.JSONERR, false) : cb(data, true));
+                ((data == null) ? cb(J.fn.ERRORS.JSONERR, false) : cb(data, true));
             } else {
-                cb(ERRORS.REQERR + ERRORS.STRCODE + request.status, false);
+                cb(J.fn.ERRORS.REQERR + J.fn.ERRORS.STRCODE + request.status, false);
             }
         };
         request.onerror = function() {
-            cb(ERRORS.REQERR, false);
+            cb(J.fn.ERRORS.REQERR, false);
         };
         request.send();
     },
     SendJSON: function SendJSON (url, data, cb) {
         if (!window.XMLHttpRequest) {
-            cb(ERRORS.NOTSUP, false);
+            cb(J.fn.ERRORS.NOTSUP, false);
             return;
         }
         var sdata;
         try {
             sdata = JSON.stringify(data);
         } catch(e) {
-            cb(ERRORS.SNDERR + e, false)
+            cb(J.fn.ERRORS.SNDERR + e, false)
         }
         var request = new XMLHttpRequest();
         request.open("POST", url, true);
         request.setRequestHeader("Content-Type", "application/json");
         request.onerror = function() {
-            cb(ERRORS.SNDERR + ERRORS.STRCODE + request.status, false);
+            cb(J.fn.ERRORS.SNDERR + J.fn.ERRORS.STRCODE + request.status, false);
         };
         request.send(sdata);
     }

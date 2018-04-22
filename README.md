@@ -53,7 +53,7 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 | ------------ | ------------ | ------------ |
 | $(id/class/tag) | J(id/class/tag) | Get element by id/class/tag |
 | .ready | .Ready() | Wait for page load |
-| - | .isUndefined(object) | Test for undefined or null |
+| - | J.fn.isUndefined(object) | Test for undefined or null |
 | .on | .On(action,function) | Add event raising for 'action' | 
 | .off | .Off(action,function) | Remove event raising for 'action' | 
 | .hide |  .Hide() | Hide element |
