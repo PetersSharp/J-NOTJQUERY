@@ -109,6 +109,10 @@ see: [formDataObject](/example/J-test-schema-1.json) [defaultStyleObject](/examp
 
 	J("#div-id-to-form").ObjectToForm(formDataObject, defaultStyleObject);
 
+or for default embedded style:
+
+	J("#div-id-to-form").ObjectToForm(formDataObject);
+
 full data example:
 
 	J("#div-id-to-form").ObjectToForm(

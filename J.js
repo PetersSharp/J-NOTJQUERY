@@ -65,6 +65,21 @@ window.J = (function (undefined) {
     EVENT = {
         CLICK: "click"
     },
+    FORMSTYLEDEFAULT = {
+        form:    "form",
+        group:   "form__group",
+        label:   "form__label",
+        rlabel:  "form__label-required",
+        xbox:    "form__wrapper-box",
+        string:  "textfield textfield-shadow textfield-radius",
+        text:    "textfield textfield-shadow textfield-radius",
+        boolean: "checkbox checkbox-blue",
+        enum:    "radio radio-blue",
+        select:  "select select-radius",
+        button:  "button button-radius button-outline-blue",
+        submit:  "button button-radius button-outline-blue",
+        reset:   "button button-radius button-outline-red"
+    },
     __isUndefined = function __isUndefined (obj) {
         return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
     },
@@ -374,7 +389,7 @@ window.J = (function (undefined) {
         }
         return obj;
     },
-    ObjectToForm (obj, styles) {
+    ObjectToForm (obj, styles = FORMSTYLEDEFAULT) {
         if ((__isUndefined(this[0])) ||
             (typeof(obj) !== TYPE.OBJ)  ||
             (typeof(styles) !== TYPE.OBJ)) { return this; }
