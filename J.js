@@ -30,6 +30,7 @@ window.J = (function (undefined) {
         HIDE: "none"
     },
     ELEMENT = {
+        FORM:     "form",
         DIV:      "div",
         H3:       "h3",
         INPUT:    "input",
@@ -650,7 +651,7 @@ window.J = (function (undefined) {
 
         if (!__check_array(owner.FormBuilder.obj.form)) { return owner; }
 
-        owner.FormBuilder.form = document.createElement(PROPERTY.FORM);
+        owner.FormBuilder.form = document.createElement(ELEMENT.FORM);
         if (__isUndefined(owner.FormBuilder.obj.properties)) {
             __add_class(
                 owner.FormBuilder.form,
