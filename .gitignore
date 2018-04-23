@@ -1,5 +1,4 @@
 *.sh
 *.cmd
-web-data-js.js
-web-data-js.tobin
+web-data-js.*
 closure-compiler-*.jar

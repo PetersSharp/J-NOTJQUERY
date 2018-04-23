@@ -124,7 +124,7 @@ window.J = (function (undefined) {
         if (ele && !this.Has(ele)) {
           Array.prototype.push.call(this, ele);
         }
-      })
+      });
       return this;
     },
     Find (sel) {
