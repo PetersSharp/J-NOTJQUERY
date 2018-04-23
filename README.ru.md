@@ -58,8 +58,9 @@
 | $(id/class/tag) | J(id/class/tag) | Получить объект |
 | .ready | .Ready() | Ожидать загрузки страницы |
 | - | J.fn.isUndefined(object) | Тест объекта на undefined или null |
-| .on | .On(action,function) | Добавить следить за событием 'action' | 
+| .on | .On(action,function) | Добавить слежку за событием 'action' | 
 | .off | .Off(action,function) | Удалить слежку за событием 'action' | 
+| .click | .Click(function) | Добавить слежку за событием 'onclick' | 
 | .hide |  .Hide() | Спрятать элемент |
 | .show |  .Show() | Показать элемент |
 | .fadeIn | .FadeIn() | Исчезновение элемента |

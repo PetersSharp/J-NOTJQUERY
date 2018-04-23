@@ -55,7 +55,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 | .ready | .Ready() | Wait for page load |
 | - | J.fn.isUndefined(object) | Test for undefined or null |
 | .on | .On(action,function) | Add event raising for 'action' | 
-| .off | .Off(action,function) | Remove event raising for 'action' | 
+| .off | .Off(action,function) | Remove event raising for 'action' |
+| .click | .Click(function) | Add event raising for action 'onclick' |  
 | .hide |  .Hide() | Hide element |
 | .show |  .Show() | Show element |
 | .fadeIn | .FadeIn() | Disappearing element |
