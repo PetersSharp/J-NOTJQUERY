@@ -3,6 +3,8 @@ Easy solution for the rapid creation of Web interfaces in embedded systems. This
 The main urge for the creation was the preservation of the usual Jquery syntax and getting rid of unnecessary functionality to minimize the library size.
 Also, a number of methods not included in the basic Jquery functionality were added.
 
+----------
+
 ### Features ###
 
 - does not have external dependencies, pure JavaScript ([ECMA](https://ru.wikipedia.org/wiki/ECMAScript))
@@ -11,6 +13,15 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 - method of converting a form into an object.
 - includes [css](J.css) styles dashboard based on [https://github.com/mazipan/lightweight-admin-template/](https://github.com/mazipan/lightweight-admin-template/ "Lightweight admin template")
 - compact, <10Kb code size in the version of minification.
+
+----------
+
+### Demo ###
+
+- [Demo ObjectToForm <-> FormToObject](https://peterssharp.github.io/J-NOTJQUERY/example/example-ObjectToForm-FormToObject.html)
+- [Test All J Method](https://peterssharp.github.io/J-NOTJQUERY/example/testAllMethod-example.html)
+
+----------
 
 #### Jquery compatible features: ####
 

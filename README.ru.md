@@ -16,6 +16,13 @@
 
 ----------
 
+### Рабочие примеры ###
+
+- [Демонстрация ObjectToForm <-> FormToObject](https://peterssharp.github.io/J-NOTJQUERY/example/example-ObjectToForm-FormToObject.html)
+- [Тест J методов и функций](https://peterssharp.github.io/J-NOTJQUERY/example/testAllMethod-example.html)
+
+----------
+
 #### Jquery совместимые функции: ####
 
 >methods with DOM tree:

@@ -45,10 +45,10 @@ window.J = (function (undefined) {
         SUBMIT:   "submit"
     },
     PROPERTY = {
-        DISPLAY: "display",
-        ONEVENT: "on",
-        INNER:   "innerHTML",
-        TEXTCTX: "textContent",
+        DISPLAY:  "display",
+        ONEVENT:  "on",
+        INNER:    "innerHTML",
+        TEXTCTX:  "textContent",
         NAME:     "name",
         ID:       "id",
         TYPE:     "type",
@@ -357,7 +357,7 @@ window.J = (function (undefined) {
     FormToObject () {
         if ((__isUndefined(this[0]))          ||
             (__isUndefined(this[0].nodeName)) ||
-            (this[0].nodeName !== PROPERTY.FORM)     ||
+            (this[0].nodeName !== TYPE.FORM)  ||
             (!this[0].elements.length)) { return null; }
 
         var skipName = function(ele) {
@@ -686,7 +686,6 @@ window.J = (function (undefined) {
 
         owner.FormBuilder.form.onsubmit = function(e) {
             e = e || window.event;
-
             if (!owner.FormBuilder.onsubmit) { return false; }
             var result = owner.FormBuilder.onsubmit(
                     e,
