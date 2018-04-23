@@ -108,7 +108,7 @@
 <a name="exampleObjectToForm"></a>
 >ObjectToForm
 
-short example:
+short example,
 see: [formDataObject](/example/J-test-schema-1.json) [defaultStyleObject](/example/J-test-styles-1.json)
 
 	J("#div-id-to-form").ObjectToForm(formDataObject, defaultStyleObject);
