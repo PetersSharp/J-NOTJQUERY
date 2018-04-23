@@ -2,3 +2,4 @@
 *.cmd
 web-data-js.js
 web-data-js.tobin
+closure-compiler-*.jar
