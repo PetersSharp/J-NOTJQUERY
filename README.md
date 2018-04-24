@@ -27,8 +27,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
  J now on public CDN:
 
-	<link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/master/J.min.css" rel="stylesheet"/>
-    <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/master/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.js" type="text/javascript"></script>
 
 ----------
 
