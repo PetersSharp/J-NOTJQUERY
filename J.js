@@ -9,14 +9,7 @@
 
 window.J = (function (undefined) {
 
-    var ERRORS = {
-        NOTSUP:  "XMLHttpRequest not support",
-        JSONERR: "JSON error",
-        REQERR:  "Request error",
-        SNDERR:  "Send error",
-        STRCODE: ", code: "
-    },
-    TYPE = {
+    var TYPE = {
         FUNCTION: "function",
         STRING:   "string",
         OBJ:      "object",
