@@ -23,6 +23,15 @@
 
 ----------
 
+### Файлы ###
+
+ J теперь на общедоступном CDN:
+
+	<link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/master/J.min.css" rel="stylesheet"/>
+    <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/master/J.min.js" type="text/javascript"></script>
+
+----------
+
 #### Jquery совместимые функции: ####
 
 >methods with DOM tree:

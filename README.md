@@ -23,6 +23,15 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
 ----------
 
+### Source ###
+
+ J now on public CDN:
+
+	<link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/master/J.min.css" rel="stylesheet"/>
+    <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/master/J.min.js" type="text/javascript"></script>
+
+----------
+
 #### Jquery compatible features: ####
 
 >methods with DOM tree:
