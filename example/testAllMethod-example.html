@@ -59,6 +59,11 @@
             <b id="a4-fadeout" class="CLK">FadeOut</b>
         </div>
 
+        <div class="TD">.Template(...)</div>
+        <div>
+            <ul id="template-list-place"></ul>
+        </div>
+
         <div class="TD">.ObjectToForm(...)</div>
         <div id="create-test-form"></div>
 
@@ -135,8 +140,13 @@ J.Ready(function () {
         console.log("HasClass(T2) 3", a4.HasClass("T2"));
         console.log("J.fn.", J.fn);
 
-        console.log(".Template Single", J("#template-list-download").Template({ name: "URL CACHE", url: "http://kyi.org/" }));
-        console.log(".Template for All",J("#template-list-download").Template(tmplObj.f));
+        console.log(".Template Single", J("#template-list-download").Template({ name: "URL CACHE", url: "http://tezt.org/" }));
+
+        J("#template-list-place").Html((function () {
+            var tmpl = J("#template-list-download").Template(tmplObj.f);
+            console.log(".Template for All", tmpl);
+            return tmpl;
+        })());
 
         J("#a4-show").Click(function () {
             J("#a4").Show();
