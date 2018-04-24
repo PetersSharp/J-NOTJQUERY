@@ -82,7 +82,7 @@ J.Ready(function () {
     onsubmit: function(event, form, data) {
             console.log("Data received. Look in console for results!");
             console.log(data);
-            J("#txtarea-result").Val(JSON.stringify(tmplObj));
+            J("#txtarea-result").Val(JSON.stringify(data));
             return false;
         }
   },{

@@ -213,7 +213,7 @@ J.Ready(function () {
         }],
         onsubmit: function(event, form, data) {
                 console.log("Data submiting:", data);
-                J("#txtarea-result").Val(JSON.stringify(tmplObj));
+                J("#txtarea-result").Val(JSON.stringify(data));
                 return false;
         }
     },{
