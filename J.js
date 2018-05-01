@@ -347,6 +347,49 @@ window.J = (function (undefined) {
         }
         return otmpl;
     },
+    Breadcrumbs (tmpltag, options = null, isquery = false) {
+        var parts  = decodeURI(window.location.pathname).split('/'),
+            tmpl   = J(tmpltag),
+            curent,
+            obj,
+            re     = /[-.,&=?@!#$%^*()'"]/g;
+
+        if (__isUndefined(tmpl[0])) { return this; }
+
+        Array.from(this).forEach(ele => {
+            for (var i = 0; i < parts.length; i++) {
+                if ((!i) && (!parts[i])) {
+                    curent = "";
+                } else if (parts[i]) {
+                    curent += "/" + parts[i];
+                }
+                obj = {
+                    url: window.location.protocol + "//" + window.location.host + curent,
+                    path: (((!__isUndefined(options)) && (!__isUndefined(options[parts[i]]))) ?
+                            options[parts[i].replace(re,"_")] : parts[i]),
+                    sep: ((i == (parts.length - 1)) ? (((isquery) && (window.location.search)) ? "/" : "") : "/")
+                };
+                this.Html(
+                    tmpl.Template(obj), true
+                );
+            }
+            if ((isquery) && (window.location.search)) {
+                var part = window.location.search.split("?")[1];
+                if (__isUndefined(part)) { return this; }
+                obj = {
+                    url: window.location.protocol + "//" + window.location.host + curent + window.location.search,
+                    path: "(" +
+                            (((!__isUndefined(options)) && (!__isUndefined(options[part]))) ?
+                                 options[part.replace(re,"_")] : part) + ")",
+                    sep: ""
+                };
+                this.Html(
+                    tmpl.Template(obj), true
+                );
+            }
+        });
+        return this;
+    },
     FormToObject () {
         if ((__isUndefined(this[0]))          ||
             (__isUndefined(this[0].nodeName)) ||
@@ -721,7 +764,20 @@ J.fn = {
     isUndefined: function isUndefined (obj) {
         return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
     },
-    GetJSON: function GetJSON (url, cb) {
+    dataHttpRequestCondition: function dataHttpRequestCondition (req, cb, erstr) {
+        if ((req.readyState == 4) && (req.status >= 200) && (req.status < 400)) {
+            var data;
+            try {
+                data = JSON.parse(req.responseText);
+            } catch(e) {
+                cb(erstr + " - " + J.fn.JSONERR + ": " + e, false)
+            }
+            ((data === null) ? cb(J.fn.ERRORS.JSONERR, false) : cb(data, true));
+        } else {
+            cb(erstr + J.fn.ERRORS.STRCODE + req.status + ":" + req.statusText, false);
+        }
+    },
+    GetJSON: function GetJSON (url, cb = function(){}) {
         if (!window.XMLHttpRequest) {
             cb(J.fn.ERRORS.NOTSUP, false);
             return;
@@ -729,24 +785,14 @@ J.fn = {
         var request = new XMLHttpRequest();
         request.open("GET", url, true);
         request.onload = function() {
-            if (request.status >= 200 && request.status < 400) {
-                var data;
-                try {
-                    data = JSON.parse(request.responseText);
-                } catch(e) {
-                    cb(J.fn.ERRORS.REQERR + e, false)
-                }
-                ((data == null) ? cb(J.fn.ERRORS.JSONERR, false) : cb(data, true));
-            } else {
-                cb(J.fn.ERRORS.REQERR + J.fn.ERRORS.STRCODE + request.status, false);
-            }
+            dataHttpRequestCondition(request, cb, J.fn.ERRORS.REQERR);
         };
         request.onerror = function() {
-            cb(J.fn.ERRORS.REQERR, false);
+            cb(J.fn.ERRORS.REQERR + J.fn.ERRORS.STRCODE + request.status, false);
         };
         request.send();
     },
-    SendJSON: function SendJSON (url, data, cb) {
+    SendJSON: function SendJSON (url, data, cb = function(){}) {
         if (!window.XMLHttpRequest) {
             cb(J.fn.ERRORS.NOTSUP, false);
             return;
@@ -755,15 +801,146 @@ J.fn = {
         try {
             sdata = JSON.stringify(data);
         } catch(e) {
-            cb(J.fn.ERRORS.SNDERR + e, false)
+            cb(J.fn.ERRORS.SNDERR + " - " + J.fn.JSONERR + ": " + e, false);
         }
         var request = new XMLHttpRequest();
         request.open("POST", url, true);
         request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function() {
+            J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.SNDERR);
+        };
         request.onerror = function() {
             cb(J.fn.ERRORS.SNDERR + J.fn.ERRORS.STRCODE + request.status, false);
         };
         request.send(sdata);
     }
 };
+
+J.JsonRPC = function (endPoint, Func = function (){}) {
+    this.jrpcver  = "2.0";
+    this.id       = 0;
+    this.req      = [];
+    this.res      = [];
+    this.err      = [];
+    this.cb       = Func;
+    this.endpoint = endPoint;
+
+    var RPCERR = {
+        JSONERR:    "not Json-RPC 2.0 ",
+        JSONFOUND:  " found",
+        JSONAEMPTY: "Json-RPC answer is empty array",
+        TYPERR:     "return data type not support"
+    };
+
+    this.CallBack = function (Func = null) {
+        if (!J.fn.isUndefined(Func)) {
+            this.cb = Func;
+        }
+        return this.cb;
+    };
+    var __array_free = function (obj) {
+        while (obj.length) {
+            obj.pop();
+        }
+        obj.length = 0;
+    };
+    var __splice_err = function (h,b,f) {
+        return "" + h + b + f;
+    };
+    this.Parse = function (data) {
+        var str = null;
+        if ((J.fn.isUndefined(data.jsonrpc))   ||
+            (typeof data.jsonrpc !== "string") ||
+            (data.jsonrpc !== this.jrpcver)) {
+            str = __splice_err(RPCERR.JSONERR, "data", RPCERR.JSONFOUND);
+        }
+        if (J.fn.isUndefined(data.id)) {
+            data.id = 0;
+            str = __splice_err(RPCERR.JSONERR, "id", RPCERR.JSONFOUND);
+        }
+        else if (!J.fn.isUndefined(data.error)) {
+            str = __splice_err(data.error.code, ": ", data.error.message);
+        }
+        else if (J.fn.isUndefined(data.result)) {
+            str = __splice_err(RPCERR.JSONERR, "result", RPCERR.JSONFOUND);
+        }
+        if (str !== null)
+        {
+            this.cb(data.id, str, false);
+            this.err.push(__splice_err(data.id, ": ", str));
+            return;
+        }
+        this.cb(data.id, data.result, true);
+        this.res.push(data);
+    };
+    this.Request = function (name, val = null, id = 0) {
+        this.id  = ((!id) ? (this.id + 1) : id);
+        this.req.push(
+            {jsonrpc: this.jrpcver, method: name, params: { param: encodeURIComponent(val) }, id: this.id}
+        );
+        console.log("Request", this.endpoint, name, val, id);
+    };
+    this.Send = function () {
+        if (!this.req.length) { return; }
+        var owner = this;
+        __array_free(this.res);
+        __array_free(this.err);
+        J.fn.SendJSON(this.endpoint, this.req, function (data, status) {
+            if (status) {
+                if (Array.isArray(data)) {
+                    if (!data.length) {
+                        owner.cb(null, RPCERR.JSONAEMPTY, false);
+                        return;
+                    }
+                    for (var i = 0; i < data.length; i++) {
+                        owner.Parse(data[i]);
+                    }
+                } else if (typeof data === "object") {
+                    owner.Parse(data);
+                } else {
+                    owner.cb(null, RPCERR.TYPERR, false);
+                }
+            } else if (typeof data === "object") {
+                var str, sarr = [];
+                for(var i in data) {
+                    sarr.push(data[i]);
+                }
+                str = sarr.join(",");
+                owner.cb(null, str, status);
+                owner.err.push(str);
+            } else if (typeof data === "string") {
+                owner.cb(null, data, status);
+                owner.err.push(data);
+            } else {
+                owner.cb(null, RPCERR.TYPERR, false);
+                owner.err.push(RPCERR.TYPERR);
+            }
+        });
+        __array_free(this.req);
+        this.id = 0;
+    };
+    return this;
+};
+
+    if (J.fn.isUndefined(J.JsonRPC.prototype.DataRequest)) {
+        Object.defineProperty(J.JsonRPC.prototype, "DataRequest", {
+            get: function ()  { return this.req;    },
+            set: function (r) { this.req = r; }
+        });
+    }
+    if (J.fn.isUndefined(J.JsonRPC.prototype.DataResult)) {
+        Object.defineProperty(J.JsonRPC.prototype, "DataResult", {
+            get: function ()  { return this.res;    }
+        });
+    }
+    if (J.fn.isUndefined(J.JsonRPC.prototype.DataErrors)) {
+        Object.defineProperty(J.JsonRPC.prototype, "DataErrors", {
+            get: function ()  { return this.err;    }
+        });
+    }
+    if (J.fn.isUndefined(J.JsonRPC.prototype.isErrors)) {
+        Object.defineProperty(J.JsonRPC.prototype, "isErrors", {
+            get: function ()  { return ((this.err.length) ? true : false); }
+        });
+    }
 

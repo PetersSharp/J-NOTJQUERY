@@ -27,8 +27,8 @@
 
  J теперь на общедоступном CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -83,6 +83,7 @@
 | .fadeOut | .FadeOut() | Появление элемента |
 | .find  | .Find(tag/id) | Найти среди потомков |
 | -  | .[Template](README.ru.md#exampleTemplate)(object) | Получить обработанный темплейт из данных object |
+| -  | .[Breadcrumbs](README.md#exampleBreadcrumbs)(tag,options,bool) | Автоматическая строка навигации на основе URL - 'Breadcrumbs'. Опции: tag указывает на id темплейта, options - списк алиасов директорий, bool - показывать query или нет, по умолчанию - нет
 | -  | .[FormToObject](README.ru.md#exampleFormToObject)() | Получить объект из данных формы |
 | -  | .[ObjectToForm](README.ru.md#exampleObjectToForm)(data,style) | Создать форму из данных [object data](/example/J-test-schema-1.json) и [object style](/example/J-test-styles-1.json) |
 
@@ -92,6 +93,15 @@
 | ------------ | ------------ | ------------ |
 | .ajax | J.fn.[GetJSON](README.ru.md#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
 | .ajax | J.fn.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
+| - | J.[JsonRPC](README.md#exampleJsonRPC)(url) | JSON-RPC Object helper |
+| - | J.JsonRPC.DataRequest | (array) get/set - показать массив готовых запросов |
+| - | J.JsonRPC.DataResult | (array) get - показать массив результатов последней сессии |
+| - | J.JsonRPC.DataErrors | (array) get - показать массив ошибок, обнуляеться при использовании метода .Send |
+| - | J.JsonRPC.isErrors | (bool) get - проверка наличия ошибок при проведении последней сессии |
+| - | J.JsonRPC.CallBack(function) | функция обратного вызова при отправлении запроса  |
+| - | J.JsonRPC.Request(method, value, id) | создать запрос |
+| - | J.JsonRPC.Send() | отправить запрос(ы)  |
+| - | J.JsonRPC.Parse(data) | разбор данных запроса, доступно только в режиме совместимости |
 
 ----------
 
@@ -244,6 +254,87 @@ JavaScript source:
 			}
 		);
 	});
+
+<a name="exampleBreadcrumbs"></a>
+>Breadcrumbs
+
+HTML source:
+
+    <head>
+		<script id="template-breadcrumbs" type="text/template">
+			<a href="{{.url}}">{{.path}}</a>{{.sep}}
+		</script>
+    </head>
+    <body>
+		<div class="alert alert-radius alert-blue">
+			<span id="breadcrumbs-path" class="breadcrumbs">
+				<a href="/"><i class="icon-home"></i></a>&nbsp;
+			</span>
+        </div>
+    </body>
+
+JavaScript source:
+
+	J("#breadcrumbs-path").Breadcrumbs("#template-breadcrumbs");
+
+или включая query параметры:
+
+	J("#breadcrumbs-path").Breadcrumbs(
+		"#template-breadcrumbs",
+		true
+	);
+
+или с расширенными параметрами:
+
+измените все символы '**-.&=?**' в именах путей на '**_**',
+
+пример: '**myfile.html**' = '**myfile_html**'
+
+
+	var opt = {
+		home: "Directoy Home",
+		about: "Directoy About",
+		myfile_html: "My Portfolio",
+		query_host: "Query show base"
+     };
+
+	J("#breadcrumbs-path").Breadcrumbs(
+		"#template-breadcrumbs",
+		opt,
+		true
+	);
+
+<a name="exampleJsonRPC"></a>
+>JsonRPC
+
+	J.Ready(function () {
+		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+
+		jrpc.Request("generateIntegers", {n:3, min:0, max:10}, 7);
+			/*  
+				method - RPC метод (функция),
+				params - параметры запроса,
+				id - идентификатор запроса RPC, если нет, выставляеться автоматически.
+			 */
+		jrpc.CallBack(function (id, data, status) {
+			/*  
+				id - идентификатор запроса RPC,
+				data - данные запроса возврата или строка ошибки,
+				status - bool, ошибки связи или пакета Json-RPC, в этом случае false.
+			 */
+			console.log("JsonRPC return:", id, data, status);
+		});
+
+		console.log("DataRequest", jrpc.DataRequest);
+
+		jrpc.Send();
+		if (jrpc.isErrors) {
+			console.log("isErrors", jrpc.isErrors);
+			console.log("DataError", jrpc.DataError);
+		}
+		console.log("DataResult", jrpc.DataResult);
+	});
+
 
 15.04.2018
 

@@ -317,17 +317,25 @@ html {
 .content__wrapper:before, .content__wrapper:after { display: table; content: ' '; }
 .content__wrapper:after { clear: both; }
 
+.breadcrumbs { font-size: 1.3em; color: #16729C; }
+.breadcrumbs a,
+.breadcrumbs a:active { outline-width: 0; color: #0096D9; text-decoration: none; }
+.breadcrumbs a:hover  { text-decoration: underline; font-weight: bold; }
+
 #in-error {
     padding-left: 15px;
 }
 .template-style-list {
-    line-height: 1.8;
+    line-height: 1.2;
     padding-left: 10px;
     display: inline-table;
 }
 .template-style-list li {
     list-style: none;
     font-variant: small-caps;
+}
+.template-style-list-pad {
+    line-height: 1.8;
 }
 
 .template-check-result {
@@ -349,9 +357,14 @@ html {
 .template-check-result-BASE {
     color: #AB47BC;
 }
+.template-check-result-IP,
+.template-check-result-BAD,
+.template-check-result-DNS {
+    color: #1E81D0;
+}
 
-.BLOCKED, .QUERY .EMPTY { }
-
+.BLOCKED, .QUERY, .EMPTY .NOT .FOUND .ADDRESS, .RECORD, .HOST, .NAME, .SCHEME, .IP, .SOURCE,
+.template-check-result-EMPTY { }
 .template-check-result-NOT:after { padding: 3px; font-size: large; content: '\e802' }
 .template-check-result-BLOCKED:after { padding: 3px; font-size: large; content: '\e809' }
 .template-check-result-ERROR:after { padding: 3px; font-size: large; content: '\e808' }

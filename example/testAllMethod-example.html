@@ -3,7 +3,7 @@
         <title>Check DNS/URL/IP ::: st-Revizor filter</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.css" media="all" rel="stylesheet"/>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.css" media="all" rel="stylesheet"/>
 
         <style type="text/css">
 .TA { padding: 20px; font-size: x-large; margin: 5px; }
@@ -22,6 +22,8 @@
   </li>
 </script>
 
+<script id="template-breadcrumbs" type="text/template"><a href="{{.url}}">{{.path}}</a>{{.sep}}</script>
+
     </head>
     <body>
 
@@ -32,6 +34,12 @@
         <div class="alert alert-radius alert-gray">
           <a href="https://peterssharp.github.io/J-NOTJQUERY/" class="alert__close">i</a>
           <strong>Test J method & function source: <span style="color: #F44336;">Open console to see it!</span></strong>
+        </div>
+
+        <div class="TD">.Breadcrumbs(...)</div>
+
+        <div class="alert alert-radius alert-blue">
+          <span id="breadcrumbs-path" class="breadcrumbs"><a href="/"><i class="icon-home"></i></a>&nbsp;</span>
         </div>
 
         <div class="alert alert-radius alert-red" id="in-warning" style="display: none;">
@@ -84,7 +92,7 @@
             </div>
         </div>
 
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.js" type="text/javascript"></script>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.js" type="text/javascript"></script>
         <script type="text/javascript">
 
 var tmplObj = {
@@ -164,6 +172,58 @@ J.Ready(function () {
 });
 
         </script>
+
+        <script type="text/javascript">
+        /* .Breadcrumbs() */
+        J.Ready(function () {
+
+            var opt = {
+                example: "J Examples",
+                testAllMethod_example_html: "Test All Methods",
+                J_NOTJQUERY: "Project NOTJQUERY"
+             };
+            J("#breadcrumbs-path").Breadcrumbs("#template-breadcrumbs", opt, true);
+
+        });
+        </script>
+
+        <script type="text/javascript">
+        /* .Breadcrumbs() */
+        J.Ready(function () {
+
+            var opt = {
+                example: "J Examples",
+                testAllMethod_example_html: "Test All Methods",
+                J_NOTJQUERY: "Project NOTJQUERY"
+             };
+            J("#breadcrumbs-path").Breadcrumbs("#template-breadcrumbs", opt, true);
+
+        });
+        </script>
+
+        <script type="text/javascript">
+        /* .JsonRPC() */
+/*
+        J.Ready(function () {
+            var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+
+            jrpc.Request("generateIntegers", {n:3, min:0, max:10});
+            jrpc.CallBack(function (id, data, status) {
+                console.log("JsonRPC return:", id, data, status);
+            });
+
+            console.log("DataRequest", jrpc.DataRequest);
+
+            jrpc.Send();
+            if (jrpc.isErrors) {
+                console.log("isErrors", jrpc.isErrors);
+                console.log("DataError", jrpc.DataError);
+            }
+            console.log("DataResult", jrpc.DataResult);
+        });
+*/
+        </script>
+
         <script type="text/javascript">
 
     J("#create-test-form").ObjectToForm(

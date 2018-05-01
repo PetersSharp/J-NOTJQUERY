@@ -27,8 +27,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
  J now on public CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.1/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -83,6 +83,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 | .fadeOut | .FadeOut() | Appearance of an element |
 | .find  | .Find(tag/id) | Find from childs |
 | -  | .[Template](README.md#exampleTemplate)(object) | Get the processed template from the data object |
+| -  | .[Breadcrumbs](README.md#exampleBreadcrumbs)(tag,options,bool) |
+Auto navigation bar - Breadcrumbs. Parameters: tag is template id, options is named directory object, bool is add query to path
 | -  | .[FormToObject](README.md#exampleFormToObject)() | Get object from form data |
 | -  | .[ObjectToForm](README.md#exampleObjectToForm)(data,style) | Create a form from the data [object data](/example/J-test-schema-1.json) and [object style](/example/J-test-styles-1.json) |
 
@@ -92,6 +94,15 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 | ------------ | ------------ | ------------ |
 | .ajax | J.fn.[GetJSON](README.md#exampleGetJSON)(url,callback) | Get object from remote Json data |
 | .ajax | J.fn.[SendJSON](README.md#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
+| - | J.[JsonRPC](README.md#exampleJsonRPC)(url) | JSON-RPC Object helper |
+| - | J.JsonRPC.DataRequest | (array) get/set - data Request |
+| - | J.JsonRPC.DataResult | (array) get - data Result |
+| - | J.JsonRPC.DataErrors | (array) get - errors before .Send |
+| - | J.JsonRPC.isErrors | (bool) get - is errors found |
+| - | J.JsonRPC.CallBack(function) | callback from send request  |
+| - | J.JsonRPC.Request(method, value, id) | make request  |
+| - | J.JsonRPC.Send() | send request(s)  |
+| - | J.JsonRPC.Parse(data) | parse data request(s), compatibility only  |
 
 ----------
 
@@ -244,5 +255,84 @@ JavaScript source:
 			}
 		);
 	});
+
+<a name="exampleBreadcrumbs"></a>
+>Breadcrumbs
+
+HTML source:
+
+    <head>
+		<script id="template-breadcrumbs" type="text/template">
+			<a href="{{.url}}">{{.path}}</a>{{.sep}}
+		</script>
+    </head>
+    <body>
+		<div class="alert alert-radius alert-blue">
+			<span id="breadcrumbs-path" class="breadcrumbs">
+				<a href="/"><i class="icon-home"></i></a>&nbsp;
+			</span>
+        </div>
+    </body>
+
+JavaScript source:
+
+	J("#breadcrumbs-path").Breadcrumbs("#template-breadcrumbs");
+
+or include query string:
+
+	J("#breadcrumbs-path").Breadcrumbs(
+		"#template-breadcrumbs",
+		true
+	);
+
+or extended named options:
+
+set any path name in options object, replace '**-.&=?**' to '**_**'
+
+replace example: '**myfile.html**' = '**myfile_html**'
+
+	var opt = {
+		home: "Directoy Home",
+		about: "Directoy About",
+		myfile_html: "My Portfolio",
+		query_host: "Query show base",
+     };
+
+	J("#breadcrumbs-path").Breadcrumbs(
+		"#template-breadcrumbs",
+		opt,
+		true
+	);
+
+<a name="exampleJsonRPC"></a>
+>JsonRPC
+
+	J.Ready(function () {
+		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+
+		jrpc.Request("generateIntegers", {n:3, min:0, max:10});
+			/*  
+				method - RPC method (remote function),
+				params - parameters for method,
+				id of the RPC request, if not, it is automatically exposed.
+			 */
+		jrpc.CallBack(function (id, data, status) {
+			/*  id - RPC request id,
+				data - return request data or error string,
+				status - bool, communication error or Json-RPC package, in this case false.
+			 */
+			console.log("JsonRPC return:", id, data, status);
+		});
+
+		console.log("DataRequest", jrpc.DataRequest);
+
+		jrpc.Send();
+		if (jrpc.isErrors) {
+			console.log("isErrors", jrpc.isErrors);
+			console.log("DataError", jrpc.DataError);
+		}
+		console.log("DataResult", jrpc.DataResult);
+	});
+
 
 15.04.2018
