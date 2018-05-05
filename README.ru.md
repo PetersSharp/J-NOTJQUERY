@@ -99,6 +99,7 @@
 | - | J.JsonRPC.DataErrors | (array) get - показать массив ошибок, обнуляеться при использовании метода .Send |
 | - | J.JsonRPC.isErrors | (bool) get - проверка наличия ошибок при проведении последней сессии |
 | - | J.JsonRPC.CallBack(function) | функция обратного вызова при отправлении запроса  |
+| - | J.JsonRPC.SetCredentials(user,password) | Basic HTTP авторизация |
 | - | J.JsonRPC.Request(method, value, id) | создать запрос |
 | - | J.JsonRPC.Send() | отправить запрос(ы)  |
 | - | J.JsonRPC.Parse(data) | разбор данных запроса, доступно только в режиме совместимости |

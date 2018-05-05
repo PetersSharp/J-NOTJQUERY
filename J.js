@@ -353,6 +353,7 @@ window.J = (function (undefined) {
             curent,
             obj,
             re     = /[-.,&=?@!#$%^*()'"]/g;
+            //re     = /[-.]/g;
 
         if (__isUndefined(tmpl[0])) { return this; }
 
@@ -777,13 +778,17 @@ J.fn = {
             cb(erstr + J.fn.ERRORS.STRCODE + req.status + ":" + req.statusText, false);
         }
     },
-    GetJSON: function GetJSON (url, cb = function(){}) {
+    GetJSON: function GetJSON (url, cb = function(){}, uname = null, upass = null) {
         if (!window.XMLHttpRequest) {
             cb(J.fn.ERRORS.NOTSUP, false);
             return;
         }
         var request = new XMLHttpRequest();
         request.open("GET", url, true);
+        if ((uname) && (upass)) {
+            request.withCredentials = true;
+            request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
+        }
         request.onload = function() {
             dataHttpRequestCondition(request, cb, J.fn.ERRORS.REQERR);
         };
@@ -792,7 +797,7 @@ J.fn = {
         };
         request.send();
     },
-    SendJSON: function SendJSON (url, data, cb = function(){}) {
+    SendJSON: function SendJSON (url, data, cb = function(){}, uname = null, upass = null) {
         if (!window.XMLHttpRequest) {
             cb(J.fn.ERRORS.NOTSUP, false);
             return;
@@ -806,6 +811,10 @@ J.fn = {
         var request = new XMLHttpRequest();
         request.open("POST", url, true);
         request.setRequestHeader("Content-Type", "application/json");
+        if ((uname) && (upass)) {
+            request.withCredentials = true;
+            request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
+        }
         request.onload = function() {
             J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.SNDERR);
         };
@@ -816,7 +825,7 @@ J.fn = {
     }
 };
 
-J.JsonRPC = function (endPoint, Func = function (){}) {
+J.JsonRPC = function (endPoint, Func = function (){}, uname = null, upass = null) {
     this.jrpcver  = "2.0";
     this.id       = 0;
     this.req      = [];
@@ -824,6 +833,8 @@ J.JsonRPC = function (endPoint, Func = function (){}) {
     this.err      = [];
     this.cb       = Func;
     this.endpoint = endPoint;
+    this.authu    = uname;
+    this.authp    = upass;
 
     var RPCERR = {
         JSONERR:    "not Json-RPC 2.0 ",
@@ -832,6 +843,10 @@ J.JsonRPC = function (endPoint, Func = function (){}) {
         TYPERR:     "return data type not support"
     };
 
+    this.SetCredentials = function (uname = null, upass = null) {
+        this.authu    = uname;
+        this.authp    = upass;
+    };
     this.CallBack = function (Func = null) {
         if (!J.fn.isUndefined(Func)) {
             this.cb = Func;
@@ -846,6 +861,11 @@ J.JsonRPC = function (endPoint, Func = function (){}) {
     };
     var __splice_err = function (h,b,f) {
         return "" + h + b + f;
+    };
+    var __normalize_param = function (val) {
+        if (J.fn.isUndefined(val))         { return null; }
+        if (typeof val === "string")       { encodeURIComponent(val); }
+        return val;
     };
     this.Parse = function (data) {
         var str = null;
@@ -876,9 +896,8 @@ J.JsonRPC = function (endPoint, Func = function (){}) {
     this.Request = function (name, val = null, id = 0) {
         this.id  = ((!id) ? (this.id + 1) : id);
         this.req.push(
-            {jsonrpc: this.jrpcver, method: name, params: { param: encodeURIComponent(val) }, id: this.id}
+            {jsonrpc: this.jrpcver, method: name, params: __normalize_param(val), id: this.id}
         );
-        console.log("Request", this.endpoint, name, val, id);
     };
     this.Send = function () {
         if (!this.req.length) { return; }
@@ -915,7 +934,7 @@ J.JsonRPC = function (endPoint, Func = function (){}) {
                 owner.cb(null, RPCERR.TYPERR, false);
                 owner.err.push(RPCERR.TYPERR);
             }
-        });
+        }, this.authu, this.authp);
         __array_free(this.req);
         this.id = 0;
     };

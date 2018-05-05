@@ -100,6 +100,7 @@ Auto navigation bar - Breadcrumbs. Parameters: tag is template id, options is na
 | - | J.JsonRPC.DataErrors | (array) get - errors before .Send |
 | - | J.JsonRPC.isErrors | (bool) get - is errors found |
 | - | J.JsonRPC.CallBack(function) | callback from send request  |
+| - | J.JsonRPC.SetCredentials(user,password) | Basic Authorization |
 | - | J.JsonRPC.Request(method, value, id) | make request  |
 | - | J.JsonRPC.Send() | send request(s)  |
 | - | J.JsonRPC.Parse(data) | parse data request(s), compatibility only  |
