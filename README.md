@@ -27,8 +27,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
  J now on public CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -92,9 +92,9 @@ Auto navigation bar - Breadcrumbs. Parameters: tag is template id, options is na
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.fn.[GetJSON](README.md#exampleGetJSON)(url,callback) | Get object from remote Json data |
-| .ajax | J.fn.[SendJSON](README.md#exampleSendJSON)(url,data,callback) | Send object by POST method in Json data format |
-| - | J.[JsonRPC](README.md#exampleJsonRPC)(url) | JSON-RPC Object helper |
+| .ajax | J.fn.[GetJSON](README.md#exampleGetJSON)(url,callback[,user,password]) | Get object from remote Json data |
+| .ajax | J.fn.[SendJSON](README.md#exampleSendJSON)(url,data,callback[,user,password]) | Send object by POST method in Json data format |
+| - | J.[JsonRPC](README.md#exampleJsonRPC)(url[,user,password]) | JSON-RPC Object helper |
 | - | J.JsonRPC.DataRequest | (array) get/set - data Request |
 | - | J.JsonRPC.DataResult | (array) get - data Result |
 | - | J.JsonRPC.DataErrors | (array) get - errors before .Send |
@@ -309,7 +309,22 @@ replace example: '**myfile.html**' = '**myfile_html**'
 >JsonRPC
 
 	J.Ready(function () {
+
+Short call:
+
 		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+
+Authentication:
+
+		var user = "user", password = "passwd";
+		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke",user,password);
+
+or
+
+		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+		jrpc.SetCredentials(user,password);
+
+create Request:
 
 		jrpc.Request("generateIntegers", {n:3, min:0, max:10});
 			/*  

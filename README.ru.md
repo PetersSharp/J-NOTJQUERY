@@ -27,8 +27,8 @@
 
  J теперь на общедоступном CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.2/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -91,9 +91,9 @@
 
 |  Jquery | J  ||
 | ------------ | ------------ | ------------ |
-| .ajax | J.fn.[GetJSON](README.ru.md#exampleGetJSON)(url,callback) | Получить объект из дистанционных Json данных |
-| .ajax | J.fn.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback) | Послать объект методом POST в формате данных Json |
-| - | J.[JsonRPC](README.md#exampleJsonRPC)(url) | JSON-RPC Object helper |
+| .ajax | J.fn.[GetJSON](README.ru.md#exampleGetJSON)(url,callback[,user,password]) | Получить объект из дистанционных Json данных |
+| .ajax | J.fn.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback[,user,password]) | Послать объект методом POST в формате данных Json |
+| - | J.[JsonRPC](README.md#exampleJsonRPC)(url[,user,password]) | JSON-RPC Object helper |
 | - | J.JsonRPC.DataRequest | (array) get/set - показать массив готовых запросов |
 | - | J.JsonRPC.DataResult | (array) get - показать массив результатов последней сессии |
 | - | J.JsonRPC.DataErrors | (array) get - показать массив ошибок, обнуляеться при использовании метода .Send |
@@ -308,8 +308,22 @@ JavaScript source:
 <a name="exampleJsonRPC"></a>
 >JsonRPC
 
+короткий вызов:
+
 	J.Ready(function () {
 		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+
+Авторизация:
+
+		var user = "user", password = "passwd";
+		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke",user,password);
+
+или
+
+		var jrpc = new J.JsonRPC("http://api.random.org/json-rpc/1/invoke");
+		jrpc.SetCredentials(user,password);
+
+создание запроса:
 
 		jrpc.Request("generateIntegers", {n:3, min:0, max:10}, 7);
 			/*  

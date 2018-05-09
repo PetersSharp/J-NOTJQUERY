@@ -785,8 +785,8 @@ J.fn = {
         }
         var request = new XMLHttpRequest();
         request.open("GET", url, true);
+        request.withCredentials = true;
         if ((uname) && (upass)) {
-            request.withCredentials = true;
             request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
         }
         request.onload = function() {
@@ -810,9 +810,9 @@ J.fn = {
         }
         var request = new XMLHttpRequest();
         request.open("POST", url, true);
+        request.withCredentials = true;
         request.setRequestHeader("Content-Type", "application/json");
         if ((uname) && (upass)) {
-            request.withCredentials = true;
             request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
         }
         request.onload = function() {
