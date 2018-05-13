@@ -1,0 +1,119 @@
+<html lang="en">
+    <head>
+        <title>J example ObjectToForm FormToObject</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.4/J.min.css" rel="stylesheet"/>
+        <script id="template-breadcrumbs" type="text/template"><a href="{{.url}}">{{.path}}</a>{{.sep}}</script>
+    </head>
+    <body>
+
+        <div class="alert alert-radius alert-blue">
+          <span id="breadcrumbs-path" class="breadcrumbs"><a href="/"><i class="icon-home"></i></a>&nbsp;</span>
+        </div>
+
+        <div style="padding: 30px; font-size: large; color: #2196F3; align-content: center;">This place load form...</div>
+        <div id="create-test-form"></div>
+
+        <div id="result-test-form">
+            <div class="form__group">
+                <textarea name="txtres" id="txtarea-result" class="textfield textfield-shadow textfield-radius" rows="5" placeholder="Form submit result"></textarea>
+            </div>
+        </div>
+
+        <div class="alert alert-radius alert-gray">
+          <a href="https://peterssharp.github.io/J-NOTJQUERY/" class="alert__close"> i </a>
+          <strong>Created:</strong> PetersSharp 2018
+        </div>
+
+    <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.4/J.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+J.Ready(function () {
+
+   var opt = {
+        example: "J Examples",
+        example_ObjectToForm_FormToObject_html: "Test ObjectToForm -&lt FormToObject",
+        J_NOTJQUERY: "Project NOTJQUERY"
+   };
+  J("#breadcrumbs-path").Breadcrumbs("#template-breadcrumbs", opt);
+
+  J("#create-test-form").ObjectToForm({
+
+        title: "This New Form",
+        properties: { name: "form2", id: "form-2" },
+        form: [
+        {
+            type: "string", title: "First Name",  required: 1,
+            properties: { type: "text", name: "str1", id: "name-test1", class: "textfield textfield-shadow", placeholder: "I am placeholder One" }
+        },{
+            type: "string", title: "Second Name",
+            properties: { type: "text", name: "str2", id: "name-test2", class: "textfield textfield-shadow", placeholder: "I am placeholder Two" }
+        },{
+            type: "string", title: "No param",
+            properties: { name: "str33" }
+        },{
+            type: "string", title: "is Password",
+            properties: { type: "password", name: "str44" }
+        },{
+            type: "text", title: "Descripton for Name",
+            properties: { type: "textarea", name: "txta1", id: "desc-test1", class: "textfield textfield-shadow textfield-radius", rows: 3, placeholder: "I am placeholder Descripton" }
+        },{
+            type: "boolean", title: "you Answer?",
+            properties: { type: "checkbox", name: "chk1", title: "is Yes/No?", checked: true }
+        },{
+            type: "enum", title: "is Enumerator?",
+            enum: [
+                { properties: { type: "radio", name: "enum1", title: "FRUIT", value: "fr" }},
+                { properties: { type: "radio", name: "enum1", title: "APPLE", value: "ap" }},
+                { properties: { type: "radio", name: "enum1", title: "BANAN", value: "bn", checked: true }},
+                { properties: { type: "radio", name: "enum1", title: "CHERY", value: "ch" }}
+            ]
+        },{
+            type: "select", title: "is Selector?",
+            properties: { name: "select1", multiple: true },
+            list: [
+                { properties: { type: "option", title: "FRUIT", value: "fr" }},
+                { properties: { type: "option", title: "APPLE", value: "ap" }},
+                { properties: { type: "option", title: "BANAN", value: "bn", selected: true }},
+                { properties: { type: "option", title: "CHERY", value: "ch", disabled: true }}
+            ]
+        },{
+            type: "hidden",
+            properties: { value: "0987654321" }
+        },{
+            type: "submit",
+            properties: { id: "submit-test1", value: "Submiting.." }
+        },{
+            type: "reset",
+            properties: { id: "reset-test1", value: "Reseting.." }
+        },{
+            type: "button",
+            properties: { id: "button-test1", value: "Click me.." }
+    }],
+    onsubmit: function(event, form, data) {
+            console.log("Data received. Look in console for results!");
+            console.log(data);
+            J("#txtarea-result").Val(JSON.stringify(data));
+            return false;
+        }
+  },{
+        form:    "form",
+        group:   "form__group",
+        label:   "form__label",
+        rlabel:  "form__label-required",
+        xbox:    "form__wrapper-box",
+        string:  "textfield textfield-shadow textfield-radius",
+        text:    "textfield textfield-shadow textfield-radius",
+        boolean: "checkbox checkbox-blue",
+        enum:    "radio radio-blue",
+        select:  "select select-radius",
+        button:  "button button-radius button-outline-blue",
+        submit:  "button button-radius button-outline-blue",
+        reset:   "button button-radius button-outline-red"
+  });
+
+});
+    </script>
+  </body>
+</html>

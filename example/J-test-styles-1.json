@@ -1,14 +1,16 @@
 {
-    "form": "form",
-    "group": "form__group",
-    "label": "form__label",
+    "form":  "form",
+    "group":  "form__group",
+    "label":  "form__label",
     "rlabel": "form__label-required",
-    "xbox": "form__wrapper-box",
+    "xbox":   "form__wrapper-box",
+    "quote":  "bqtitle",
     "string": "textfield textfield-shadow textfield-radius",
-    "text": "textfield textfield-shadow textfield-radius",
-    "boolean": "checkbox checkbox-blue",
-    "enum": "radio radio-blue",
+    "text":   "textfield textfield-shadow textfield-radius",
+    "boolean":"checkbox checkbox-blue",
+    "enum":   "radio radio-blue",
     "select": "select select-radius",
     "submit": "button button-radius button-outline-blue",
-    "reset": "button button-radius button-outline-red"
+    "button": "button button-radius button-outline-blue",
+    "reset":  "button button-radius button-outline-red"
 }

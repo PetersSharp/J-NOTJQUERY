@@ -1,0 +1,705 @@
+{
+  "title": "stRevizor setup",
+  "properties": {
+    "name": "setupform",
+    "id": "form-setup"
+  },
+  "form": [
+    {
+      "type": "line"
+    },
+    {
+      "type": "menu",
+      "tags": [
+        {
+          "title": "MODULES",
+          "tag": "modules"
+        },
+        {
+          "title": "SYSTEM",
+          "tag": "system"
+        },
+        {
+          "title": "HASHMGR",
+          "tag": "hashmgr"
+        },
+        {
+          "title": "NETWORK",
+          "tag": "network"
+        },
+        {
+          "title": "WATCH",
+          "tag": "watch"
+        },
+        {
+          "title": "URLFILTER",
+          "tag": "urlfilter"
+        },
+        {
+          "title": "WEBMOD",
+          "tag": "webmod"
+        }
+      ]
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "modules",
+      "tag": "modules"
+    },
+    {
+      "type": "boolean",
+      "title": "DNS filter",
+      "properties": {
+        "type": "checkbox",
+        "name": "dnsfilter",
+        "title": "DNS filter module enable",
+        "checked": false,
+        "id": "dns-filter"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "URL filter",
+      "properties": {
+        "type": "checkbox",
+        "name": "urlfilter",
+        "title": "URL filter module enable",
+        "checked": false,
+        "id": "url-filter"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "IPFW filter",
+      "properties": {
+        "type": "checkbox",
+        "name": "ipfwfilter",
+        "title": "IPFW filter module enable",
+        "checked": false,
+        "id": "ipfw-filter"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "XML parse module",
+      "properties": {
+        "type": "checkbox",
+        "name": "xmlpmod",
+        "title": "XML parse module enable",
+        "checked": false,
+        "id": "xmlp-mod"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "Watch module",
+      "properties": {
+        "type": "checkbox",
+        "name": "watchmod",
+        "title": "Watch module enable",
+        "checked": false,
+        "id": "watch-mod"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "Hash manager module",
+      "properties": {
+        "type": "checkbox",
+        "name": "hashmgrmod",
+        "title": "Hash manager enable",
+        "checked": true,
+        "id": "hashmgr-mod"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "Web interface module",
+      "properties": {
+        "type": "checkbox",
+        "name": "webmod",
+        "title": "Web interface enable",
+        "checked": true,
+        "id": "web-mod"
+      }
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "system",
+      "tag": "system"
+    },
+    {
+      "type": "string",
+      "title": "System CPU number",
+      "properties": {
+        "type": "number",
+        "name": "syscpunum",
+        "id": "sys-cpu-num",
+        "value": "4",
+        "placeholder": "CPU number, default configure set this"
+      }
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "hashmgr",
+      "tag": "hashmgr"
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr DNS resolver",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmresolv",
+        "title": "Hash manager resolve and check DNS name",
+        "checked": false,
+        "id": "hm-resolv"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr auto check",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmcheck",
+        "title": "Hash manager check auto enable",
+        "checked": false,
+        "id": "hm-check"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr clear",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmclear",
+        "title": "Hash manager clear base after rescan",
+        "checked": true,
+        "id": "hm-clear"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr Json format",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmstatjson",
+        "title": "Hash manager write stat to Json format",
+        "checked": false,
+        "id": "hm-stat-json"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr XML format",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmstatxml",
+        "title": "Hash manager write stat to XML format",
+        "checked": true,
+        "id": "hm-stat-xml"
+      }
+    },
+    {
+      "type": "string",
+      "title": "HashMgr DNS timeout",
+      "properties": {
+        "type": "number",
+        "name": "hmresolvtm",
+        "id": "hm-resolv-tm",
+        "value": "60",
+        "placeholder": "Hash manager DNS resolver timeout, default: 60"
+      }
+    },
+    {
+      "type": "string",
+      "title": "HashMgr check timeout",
+      "properties": {
+        "type": "number",
+        "name": "hmchecktm",
+        "id": "hm-check-tm",
+        "value": "1440",
+        "placeholder": "Hash manager check global timeout, default: 1440"
+      }
+    },
+    {
+      "type": "string",
+      "title": "HashMgr poll timeout",
+      "properties": {
+        "type": "number",
+        "name": "hmchecktmpoll",
+        "id": "hm-check-tm-poll",
+        "value": "450",
+        "placeholder": "Hash manager poll global timeout, default: 450"
+      }
+    },
+    {
+      "type": "string",
+      "title": "HashMgr curl timeout",
+      "properties": {
+        "type": "number",
+        "name": "hmchecktmcurl",
+        "id": "hm-check-tm-curl",
+        "value": "0",
+        "placeholder": "Hash manager check global curl timeout, default: 0, no timeout"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr check IP",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmcheckip",
+        "title": "Hash manager check IP destination",
+        "checked": false,
+        "id": "hm-check-ip"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr check redirect",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmcheckredir",
+        "title": "Hash manager check redirect status, not proxy mode",
+        "checked": true,
+        "id": "hm-check-redir"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr check no TLS SNI",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmchecknosni",
+        "title": "Hash manager check NOT use TLS SNI hostname",
+        "checked": false,
+        "id": "hm-check-nosni"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr check proxy connect",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmcheckproxy",
+        "title": "Hash manager check use proxy method connection",
+        "checked": false,
+        "id": "hm-check-proxy"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr check verbose",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmcheckverbose",
+        "title": "Hash manager check enable curl debug information",
+        "checked": false,
+        "id": "hm-check-verbose"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "HashMgr check report",
+      "properties": {
+        "type": "checkbox",
+        "name": "hmcheckreport",
+        "title": "Hash manager write check report to blocklist.fw.check",
+        "checked": true,
+        "id": "hm-check-report"
+      }
+    },
+    {
+      "type": "string",
+      "title": "HashMgr check UA string",
+      "properties": {
+        "type": "text",
+        "name": "hmcheckua",
+        "id": "hm-check-ua",
+        "value": "strevizor access checker/0.0.1.7",
+        "placeholder": "Hash manager User Agent string for check HTTP filter"
+      }
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "network",
+      "tag": "network"
+    },
+    {
+      "type": "string",
+      "title": "Network filter port DNS",
+      "properties": {
+        "type": "number",
+        "name": "netportdns",
+        "id": "net-port-dns",
+        "value": "5300",
+        "placeholder": "Network DNS filter port, default: 5300"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network filter port HTTP",
+      "properties": {
+        "type": "number",
+        "name": "netporthttp",
+        "id": "net-port-http",
+        "value": "5800",
+        "placeholder": "Network HTTP/HTTPS filter port, default: 5800"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network port Web",
+      "properties": {
+        "type": "number",
+        "name": "netportweb",
+        "id": "net-port-web",
+        "value": "5801",
+        "placeholder": "Network port Web intrface, default: 5801"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network port proxy",
+      "properties": {
+        "type": "number",
+        "name": "netportproxy",
+        "id": "net-port-proxy",
+        "value": "3128",
+        "placeholder": "Network extended proxy port"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network server proxy",
+      "properties": {
+        "type": "text",
+        "name": "netservproxy",
+        "id": "net-serv-proxy",
+        "value": "1.2.3.4",
+        "placeholder": "Network extended proxy IP address"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network server DNS",
+      "properties": {
+        "type": "text",
+        "name": "netservdns",
+        "id": "net-serv-dns",
+        "value": "8.8.8.8",
+        "placeholder": "Network extended DNS address"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network max thread number",
+      "properties": {
+        "type": "number",
+        "name": "netthreadnum",
+        "id": "net-thread-num",
+        "value": "96",
+        "placeholder": "Network pool maximum thread number"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network queue size",
+      "properties": {
+        "type": "number",
+        "name": "netqueuesize",
+        "id": "net-queue-size",
+        "value": "1024",
+        "placeholder": "Network DNS queue size, default: 1024"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network global timeout",
+      "properties": {
+        "type": "number",
+        "name": "nettimeout",
+        "id": "net-timeout",
+        "value": "3500",
+        "placeholder": "Network global timeout, default: 3500"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network filtred IPFW",
+      "properties": {
+        "type": "text",
+        "name": "netfiltredipfw",
+        "id": "net-filtred-ipfw",
+        "value": "192.168.2.0/24",
+        "placeholder": "Network filtred IPFW IP address and mask (iptables rule)"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network filtred DNS",
+      "properties": {
+        "type": "text",
+        "name": "netfiltreddns",
+        "id": "net-filtred-dns",
+        "value": "192.168.2.0/24",
+        "placeholder": "Network filtred DNS IP address and mask (iptables rule)"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network filtred HTTP",
+      "properties": {
+        "type": "text",
+        "name": "netfiltredhttp",
+        "id": "net-filtred-http",
+        "value": "192.168.2.0/24",
+        "placeholder": "Network filtred HTTP IP address and mask (iptables rule)"
+      }
+    },
+    {
+      "type": "string",
+      "title": "Network gateway",
+      "properties": {
+        "type": "text",
+        "name": "netgateway",
+        "id": "net-gateway",
+        "value": "192.168.2.1",
+        "placeholder": "Network gateway IP address, default determine auto"
+      }
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "watch",
+      "tag": "watch"
+    },
+    {
+      "type": "string",
+      "title": "Directory watch path",
+      "required": true,
+      "properties": {
+        "type": "text",
+        "name": "watchpath",
+        "id": "watch-path",
+        "value": "/useuid/tftp/192.168.2.2/",
+        "placeholder": "Directory watch path, default default configure set this"
+      }
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "urlfilter",
+      "tag": "urlfilter"
+    },
+    {
+      "type": "boolean",
+      "title": "URI add server",
+      "properties": {
+        "type": "checkbox",
+        "name": "uriaddserver",
+        "title": "URI add header: server",
+        "checked": true,
+        "id": "uri-add-server"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "URI add forward",
+      "properties": {
+        "type": "checkbox",
+        "name": "uriaddforward",
+        "title": "URI add header: forward",
+        "checked": true,
+        "id": "uri-add-forward"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "URI add forward proto",
+      "properties": {
+        "type": "checkbox",
+        "name": "uriaddfwdproto",
+        "title": "URI add header: forward protocol",
+        "checked": true,
+        "id": "uri-add-fwdproto"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "URI add forward host",
+      "properties": {
+        "type": "checkbox",
+        "name": "uriaddfwdhost",
+        "title": "URI add header: forward host",
+        "checked": true,
+        "id": "uri-add-fwdhost"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "URL filter use proxy",
+      "properties": {
+        "type": "checkbox",
+        "name": "urluseproxy",
+        "title": "Use extended proxy, see Network settings",
+        "checked": false,
+        "id": "url-use-proxy"
+      }
+    },
+    {
+      "type": "line"
+    },
+    {
+      "type": "group",
+      "title": "webmod",
+      "tag": "webmod"
+    },
+    {
+      "type": "boolean",
+      "title": "WEB home html",
+      "properties": {
+        "type": "checkbox",
+        "name": "webhomehtml",
+        "title": "Enable WEB path: html",
+        "checked": true,
+        "id": "web-home-html"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "WEB home download",
+      "properties": {
+        "type": "checkbox",
+        "name": "webhomedownload",
+        "title": "Enable WEB path: download",
+        "checked": true,
+        "id": "web-home-download"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "WEB home upload",
+      "properties": {
+        "type": "checkbox",
+        "name": "webhomeupload",
+        "title": "Enable WEB path: upload",
+        "checked": true,
+        "id": "web-home-upload"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "WEB home admin",
+      "properties": {
+        "type": "checkbox",
+        "name": "webhomeadmin",
+        "title": "Enable WEB path: admin",
+        "checked": true,
+        "id": "web-home-admin"
+      }
+    },
+    {
+      "type": "string",
+      "title": "WEB home expire",
+      "properties": {
+        "type": "number",
+        "name": "webhomeexpire",
+        "id": "web-home-expire",
+        "value": "259200",
+        "placeholder": "Set maximum expire time, default: 259200"
+      }
+    },
+    {
+      "type": "string",
+      "title": "WEB home CORS ACAO",
+      "properties": {
+        "type": "text",
+        "name": "webhomeacao",
+        "id": "web-home-acao",
+        "value": "*",
+        "placeholder": "Set CORS header: Control-Allow-Origin, default: * (all)"
+      }
+    },
+    {
+      "type": "enum",
+      "title": "WEB auth type",
+      "enum": [
+        {
+          "properties": {
+            "type": "radio",
+            "name": "webauthtype",
+            "title": "BASIC",
+            "value": "basic",
+            "checked": true
+          }
+        },
+        {
+          "properties": {
+            "type": "radio",
+            "name": "webauthtype",
+            "title": "DIGEST",
+            "value": "digest",
+            "checked": false
+          }
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "title": "WEB auth user space",
+      "properties": {
+        "type": "checkbox",
+        "name": "webauthuser",
+        "title": "WEB authorization for all url",
+        "checked": true,
+        "id": "web-auth-user"
+      }
+    },
+    {
+      "type": "boolean",
+      "title": "WEB auth admin space",
+      "properties": {
+        "type": "checkbox",
+        "name": "webauthadmin",
+        "title": "WEB authorization for admin area",
+        "checked": true,
+        "id": "web-auth-admin"
+      }
+    },
+    {
+      "type": "submit",
+      "properties": {
+        "type": "submit",
+        "name": "submit",
+        "id": "submit-setup",
+        "value": "Save.."
+      }
+    },
+    {
+      "type": "reset",
+      "properties": {
+        "type": "reset",
+        "name": "reset",
+        "id": "reset-setup",
+        "value": "Reseting.."
+      }
+    }
+  ]
+}

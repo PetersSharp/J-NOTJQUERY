@@ -18,8 +18,12 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
 ### Demo ###
 
-- [Demo ObjectToForm <-> FormToObject](https://peterssharp.github.io/J-NOTJQUERY/example/example-ObjectToForm-FormToObject.html)
+- [Demo ObjectToForm <-> FormToObject](https://peterssharp.github.io/J-NOTJQUERY/example/testObjectToForm-FormToObject-example.html)
+- [Demo ObjectToForm full](https://peterssharp.github.io/J-NOTJQUERY/example/testObjectToForm-example.html)
 - [Test All J Method](https://peterssharp.github.io/J-NOTJQUERY/example/testAllMethod-example.html)
+- [Example ObjectToForm data](https://peterssharp.github.io/J-NOTJQUERY/example/J-test-schema-1.json)
+- [Example ObjectToForm data full](https://peterssharp.github.io/J-NOTJQUERY/example/J-full-schema.json)
+- [Example ObjectToForm style](https://peterssharp.github.io/J-NOTJQUERY/example/J-test-styles-1.json)
 
 ----------
 

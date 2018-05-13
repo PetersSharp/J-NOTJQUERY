@@ -17,6 +17,9 @@ window.J = (function (undefined) {
         TEXT:     "text",
         ENUM:     "enum",
         FORM:     "FORM",
+        LINE:     "line",
+        GROUP:    "group",
+        MENU:     "menu"
     },
     STYLE = {
         SHOW: "block",
@@ -25,7 +28,11 @@ window.J = (function (undefined) {
     ELEMENT = {
         FORM:     "form",
         DIV:      "div",
+        H1:       "h1",
         H3:       "h3",
+        A:        "a",
+        LINE:     "hr",
+        GROUP:    "blockquote",
         INPUT:    "input",
         CHECKBOX: "checkbox",
         RADIO:    "radio",
@@ -42,6 +49,7 @@ window.J = (function (undefined) {
         ONEVENT:  "on",
         INNER:    "innerHTML",
         TEXTCTX:  "textContent",
+        HREF:     "href",
         NAME:     "name",
         ID:       "id",
         TYPE:     "type",
@@ -54,7 +62,8 @@ window.J = (function (undefined) {
         TITLE:    "title",
         OPTION:   "option",
         VALUE:    "value",
-        HIDDEN:   "hidden"
+        HIDDEN:   "hidden",
+        QUOTE:    "quote"
     },
     EVENT = {
         CLICK: "click"
@@ -65,6 +74,7 @@ window.J = (function (undefined) {
         label:   "form__label",
         rlabel:  "form__label-required",
         xbox:    "form__wrapper-box",
+        quote:   "bqtitle",
         string:  "textfield textfield-shadow textfield-radius",
         text:    "textfield textfield-shadow textfield-radius",
         boolean: "checkbox checkbox-blue",
@@ -648,6 +658,42 @@ window.J = (function (undefined) {
                 __check_propid(obj, obj.properties.type);
                 return __create_ele(ELEMENT.INPUT, obj.properties, null);
             }
+            var __create_group = function(obj) {
+                if (__isUndefined(obj.title)) {
+                    return null;
+                }
+                var ele = document.createElement(ELEMENT.GROUP);
+                if (__check_field(owner.FormBuilder.styles, PROPERTY.QUOTE)) {
+                    __add_class(ele, owner.FormBuilder.styles.quote);
+                }
+                if (!__isUndefined(obj.tag)) {
+                    var tag = document.createElement(ELEMENT.A);
+                    tag.setAttribute(PROPERTY.NAME, obj.tag);
+                    ele.appendChild(tag);
+                }
+                ele.appendChild(
+                    document.createTextNode(obj.title)
+                );
+                return ele;
+            }
+            var __create_menu = function(obj) {
+                if ((__isUndefined(obj.tags)) || (!obj.tags.length)) {
+                    return null;
+                }
+                var div = document.createElement(ELEMENT.DIV);
+                if (__check_field(owner.FormBuilder.styles, PROPERTY.GROUP)) {
+                    __add_class(div, owner.FormBuilder.styles.group);
+                }
+                for (var i = 0; i < obj.tags.length; i++) {
+                    var tag = document.createElement(ELEMENT.A);
+                    tag.setAttribute(PROPERTY.HREF, "#" + obj.tags[i].tag);
+                    tag.appendChild(
+                        document.createTextNode(obj.tags[i].title)
+                    );
+                    div.appendChild(tag);
+                }
+                return div;
+            }
             var __parse_source = function(obj) {
                 if (
                     (typeof obj      !== TYPE.OBJ) ||
@@ -664,6 +710,12 @@ window.J = (function (undefined) {
                     case TYPE.ENUM:       { field = __create_enum(obj);   break; }
                     case ELEMENT.SELECT:  { field = __create_select(obj); break; }
                     case PROPERTY.HIDDEN: { field = __create_hidden(obj); break; }
+                    case TYPE.MENU:       { field = __create_menu(obj);   break; }
+                    case TYPE.GROUP:      { field = __create_group(obj);  break; }
+                    case TYPE.LINE:       {
+                        field = document.createElement(ELEMENT.LINE);
+                        break;
+                    }
                     case ELEMENT.BUTTON:  {
                         __check_propid(obj, ELEMENT.BUTTON);
                         obj.properties.type = ELEMENT.BUTTON;
@@ -702,11 +754,11 @@ window.J = (function (undefined) {
             );
         }
         if (__check_field(owner.FormBuilder.obj, PROPERTY.TITLE)) {
-            var h3 = document.createElement(ELEMENT.H3);
-            h3.appendChild(
+            var h1 = document.createElement(ELEMENT.H1);
+            h1.appendChild(
                 document.createTextNode(owner.FormBuilder.obj.title)
             );
-            owner.FormBuilder.form.appendChild(h3);
+            owner.FormBuilder.form.appendChild(h1);
         }
         for (; owner.FormBuilder.cnt < owner.FormBuilder.obj.form.length; owner.FormBuilder.cnt++) {
             __parse_source(owner.FormBuilder.obj.form[owner.FormBuilder.cnt]);
@@ -790,7 +842,7 @@ J.fn = {
             request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
         }
         request.onload = function() {
-            dataHttpRequestCondition(request, cb, J.fn.ERRORS.REQERR);
+            J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.REQERR);
         };
         request.onerror = function() {
             cb(J.fn.ERRORS.REQERR + J.fn.ERRORS.STRCODE + request.status, false);

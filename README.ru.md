@@ -18,8 +18,12 @@
 
 ### Рабочие примеры ###
 
-- [Демонстрация ObjectToForm <-> FormToObject](https://peterssharp.github.io/J-NOTJQUERY/example/example-ObjectToForm-FormToObject.html)
+- [Демонстрация ObjectToForm <-> FormToObject](https://peterssharp.github.io/J-NOTJQUERY/example/testObjectToForm-FormToObject-example.html)
+- [Демонстрация ObjectToForm full](https://peterssharp.github.io/J-NOTJQUERY/example/testObjectToForm-example.html)
 - [Тест J методов и функций](https://peterssharp.github.io/J-NOTJQUERY/example/testAllMethod-example.html)
+- [Пример данных ObjectToForm](https://peterssharp.github.io/J-NOTJQUERY/example/J-test-schema-1.json)
+- [Пример данных ObjectToForm full](https://peterssharp.github.io/J-NOTJQUERY/example/J-full-schema.json)
+- [Пример стилей ObjectToForm](https://peterssharp.github.io/J-NOTJQUERY/example/J-test-styles-1.json)
 
 ----------
 
