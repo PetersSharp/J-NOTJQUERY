@@ -31,8 +31,8 @@
 
  J теперь на общедоступном CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -60,6 +60,7 @@
 |   | .ToggleClass | Переключить класс |
 |   | .HasClass | Имеет ли класс |
 |   | .Css | Получить css элемента |
+|   | .Attr(key,value) | Установить атрибуты для элемента |
 
 >работа с HTML/текстом:
 
@@ -80,7 +81,8 @@
 | - | J.fn.isUndefined(object) | Тест объекта на undefined или null |
 | .on | .On(action,function) | Добавить слежку за событием 'action' | 
 | .off | .Off(action,function) | Удалить слежку за событием 'action' | 
-| .click | .Click(function) | Добавить слежку за событием 'onclick' | 
+| - | .OnClick(function) | Добавить слежку за событием 'onclick' |
+| .click | .Click() | Нажать элемент |  
 | .hide |  .Hide() | Спрятать элемент |
 | .show |  .Show() | Показать элемент |
 | .fadeIn | .FadeIn() | Исчезновение элемента |
@@ -90,6 +92,7 @@
 | -  | .[Breadcrumbs](README.md#exampleBreadcrumbs)(tag,options,bool) | Автоматическая строка навигации на основе URL - 'Breadcrumbs'. Опции: tag указывает на id темплейта, options - списк алиасов директорий, bool - показывать query или нет, по умолчанию - нет
 | -  | .[FormToObject](README.ru.md#exampleFormToObject)() | Получить объект из данных формы |
 | -  | .[ObjectToForm](README.ru.md#exampleObjectToForm)(data,style) | Создать форму из данных [object data](/example/J-test-schema-1.json) и [object style](/example/J-test-styles-1.json) |
+| -  | J.fn.HumanizeFileSize(number) | Размер файла в читаемом виде, возвращает строку |
 
 >прием/передача данных:
 
@@ -97,11 +100,13 @@
 | ------------ | ------------ | ------------ |
 | .ajax | J.fn.[GetJSON](README.ru.md#exampleGetJSON)(url,callback[,user,password]) | Получить объект из дистанционных Json данных |
 | .ajax | J.fn.[SendJSON](README.ru.md#exampleSendJSON)(url,data,callback[,user,password]) | Послать объект методом POST в формате данных Json |
-| - | J.[JsonRPC](README.md#exampleJsonRPC)(url[,user,password]) | JSON-RPC Object helper |
+| .ajax | J.fn.[SendBin](README.ru.md#exampleSendBin)(url,data,[callback,progress,user,password]) | Послать бинарный файл методом POST, использует бинарный поток, не 'multipart/form-data' формат! |
+| - | J.[JsonRPC](README.md#exampleJsonRPC)(endpoint[,user,password]) | JSON-RPC Object helper, endpoint являеться URI path |
 | - | J.JsonRPC.DataRequest | (array) get/set - показать массив готовых запросов |
 | - | J.JsonRPC.DataResult | (array) get - показать массив результатов последней сессии |
 | - | J.JsonRPC.DataErrors | (array) get - показать массив ошибок, обнуляеться при использовании метода .Send |
 | - | J.JsonRPC.isErrors | (bool) get - проверка наличия ошибок при проведении последней сессии |
+| - | J.JsonRPC.SetEndPoint(endpoint) | установить URI доставки |
 | - | J.JsonRPC.CallBack(function) | функция обратного вызова при отправлении запроса  |
 | - | J.JsonRPC.SetCredentials(user,password) | Basic HTTP авторизация |
 | - | J.JsonRPC.Request(method, value, id) | создать запрос |
@@ -126,6 +131,38 @@
 	var data = { id: 1, other: "test" };
     J.Ready(function () {
 		J.fn.SendJSON("http://send.test.com/", data, console.log.bind(console));
+	});
+
+<a name="exampleSendBin"></a>
+>SendBin отправка binary данных (например локальный файл)
+>! использует бинарный поток, не 'multipart/form-data' формат !
+
+HTML part:
+
+	<form name="frmupload" id="upload-form">
+    <input type="file" name="infile" id="in-file" accept=".*"/>
+    <label for="in-file">Upload Files</label>
+    <progress value="0" max="100" id="infile-pg"></progress>
+	<input type="submit" value="Send"/>
+	</form>
+
+JavaScript part:
+
+	var frmf = J("#in-file")[0],
+	    file = frmf.files[0];
+
+	J("#upload-form").On("submit", function (e) {
+		if (file) {
+	        J("#infile-pg").Attr("max", file.size).Show();
+	        J.fn.SendBin("/url/upload?" + file.name, file,
+	            function (t, s) {
+					console.log("Alert",t,s);
+	            },
+	            function (c, t) {
+	                J("#infile-pg").Attr("value", c)
+		        }
+			);			
+		}
 	});
 
 <a name="exampleFormToObject"></a>

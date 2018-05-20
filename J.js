@@ -9,7 +9,8 @@
 
 window.J = (function (undefined) {
 
-    var TYPE = {
+    var VERSION = "0.0.5",
+    TYPE = {
         FUNCTION: "function",
         STRING:   "string",
         OBJ:      "object",
@@ -186,6 +187,12 @@ window.J = (function (undefined) {
         });
         return this;
     },
+    Attr(key, prop) {
+        Array.from(this).forEach(ele => {
+            ele.setAttribute(key, prop)
+        });
+        return this;
+    },
     AddClass (cn) {
         Array.from(this).forEach(ele => {
             ele.classList.add(cn)
@@ -280,6 +287,12 @@ window.J = (function (undefined) {
         });
         return this;
     },
+    Click () {
+        Array.from(this).forEach(ele => {
+            ele.click()
+        });
+        return this;
+    },
     On (ev, fun, opt = false) {
         Array.from(this).forEach(ele => {
             if (!__isUndefined(ele.addEventListener)) {
@@ -304,7 +317,7 @@ window.J = (function (undefined) {
         });
         return this;
     },
-    Click (fun, opt = false) {
+    OnClick (fun, opt = false) {
         return this.On(EVENT.CLICK, fun, opt);
     },
     FadeIn(display) {
@@ -432,7 +445,16 @@ window.J = (function (undefined) {
                     }
                 }
             } else {
-                obj[eles[i].name] = eles[i].value;
+                if (__isUndefined(obj[eles[i].name])) {
+                    obj[eles[i].name] = eles[i].value;
+                } else if (Array.isArray(obj[eles[i].name])) {
+                    obj[eles[i].name].push(eles[i].value);
+                } else {
+                    var tval = obj[eles[i].name];
+                    obj[eles[i].name] = [];
+                    obj[eles[i].name].push(tval);
+                    obj[eles[i].name].push(eles[i].value);
+                }
             }
         }
         return obj;
@@ -817,17 +839,30 @@ J.fn = {
     isUndefined: function isUndefined (obj) {
         return ((typeof obj === typeof void 0) ? true : ((obj === null) ? true : false));
     },
+    dataHttpRequestJsonParse: function dataHttpRequestJsonParse (req, cb, erstr) {
+        var data;
+        try {
+            data = JSON.parse(req.responseText);
+        } catch(e) {
+            cb(erstr + " - " + J.fn.JSONERR + ": " + e, false)
+        }
+        ((data === null) ? cb(J.fn.ERRORS.JSONERR, false) : cb(data, true));
+    },
     dataHttpRequestCondition: function dataHttpRequestCondition (req, cb, erstr) {
         if ((req.readyState == 4) && (req.status >= 200) && (req.status < 400)) {
-            var data;
-            try {
-                data = JSON.parse(req.responseText);
-            } catch(e) {
-                cb(erstr + " - " + J.fn.JSONERR + ": " + e, false)
-            }
-            ((data === null) ? cb(J.fn.ERRORS.JSONERR, false) : cb(data, true));
+            return true;
         } else {
             cb(erstr + J.fn.ERRORS.STRCODE + req.status + ":" + req.statusText, false);
+            return false;
+        }
+    },
+    HumanizeFileSize: function HumanizeFileSize (num) {
+        if (num < 1024) {
+            return num + " bytes";
+        } else if ((num > 1024) && (num < 1048576)) {
+            return (num/1024).toFixed(1) + " KB";
+        } else if (num > 1048576) {
+            return (num/1048576).toFixed(1) + " MB";
         }
     },
     GetJSON: function GetJSON (url, cb = function(){}, uname = null, upass = null) {
@@ -842,7 +877,9 @@ J.fn = {
             request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
         }
         request.onload = function() {
-            J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.REQERR);
+            if (J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.REQERR)) {
+                J.fn.dataHttpRequestJsonParse(request, cb, J.fn.ERRORS.REQERR);
+            }
         };
         request.onerror = function() {
             cb(J.fn.ERRORS.REQERR + J.fn.ERRORS.STRCODE + request.status, false);
@@ -868,16 +905,47 @@ J.fn = {
             request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
         }
         request.onload = function() {
-            J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.SNDERR);
+            if (J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.SNDERR)) {
+                J.fn.dataHttpRequestJsonParse(request, cb, J.fn.ERRORS.SNDERR);
+            }
         };
         request.onerror = function() {
             cb(J.fn.ERRORS.SNDERR + J.fn.ERRORS.STRCODE + request.status, false);
         };
         request.send(sdata);
+    },
+    SendBin: function UploadBin (url, data, cb = function(){}, progress_cb = function(){}, uname = null, upass = null) {
+        if (!window.XMLHttpRequest) {
+            cb(J.fn.ERRORS.NOTSUP, false);
+            return;
+        }
+        if (!data) {
+            return;
+        }
+        var request = new XMLHttpRequest();
+        request.open("POST", url, true);
+        request.withCredentials = true;
+        request.upload.onprogress = progress_cb;
+        request.setRequestHeader("Content-Type", "application/octet-stream");
+        if ((uname) && (upass)) {
+            request.setRequestHeader ("Authorization", "Basic " + btoa(uname + ":" + upass));
+        }
+        request.upload.onprogress = function(e) {
+            progress_cb(e.loaded, e.total);
+        };
+        request.onload = function() {
+            if (J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.SNDERR)) {
+                cb(request.responseText, true);
+            }
+        };
+        request.onerror = function() {
+            cb(J.fn.ERRORS.SNDERR + J.fn.ERRORS.STRCODE + request.status, false);
+        };
+        request.send(data);
     }
 };
 
-J.JsonRPC = function (endPoint, Func = function (){}, uname = null, upass = null) {
+J.JsonRPC = function (endPoint = null, Func = function (){}, uname = null, upass = null) {
     this.jrpcver  = "2.0";
     this.id       = 0;
     this.req      = [];
@@ -895,9 +963,14 @@ J.JsonRPC = function (endPoint, Func = function (){}, uname = null, upass = null
         TYPERR:     "return data type not support"
     };
 
+    this.SetEndPoint = function (endpoint = null) {
+        if (!J.fn.isUndefined(endpoint)) {
+            this.endpoint = endpoint;
+        }
+    };
     this.SetCredentials = function (uname = null, upass = null) {
-        this.authu    = uname;
-        this.authp    = upass;
+        this.authu = uname;
+        this.authp = upass;
     };
     this.CallBack = function (Func = null) {
         if (!J.fn.isUndefined(Func)) {
@@ -952,7 +1025,7 @@ J.JsonRPC = function (endPoint, Func = function (){}, uname = null, upass = null
         );
     };
     this.Send = function () {
-        if (!this.req.length) { return; }
+        if ((!this.endpoint) || (!this.req.length)) { return; }
         var owner = this;
         __array_free(this.res);
         __array_free(this.err);

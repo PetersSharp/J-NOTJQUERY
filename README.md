@@ -31,8 +31,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
  J now on public CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.3/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -60,6 +60,7 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 |   | .ToggleClass | Toggle class |
 |   | .HasClass | Has is class |
 |   | .Css | Get css from element |
+|   | .Attr(key,value) | Set attribute to element |
 
 >methods HTML/Text:
 
@@ -80,7 +81,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 | - | J.fn.isUndefined(object) | Test for undefined or null |
 | .on | .On(action,function) | Add event raising for 'action' | 
 | .off | .Off(action,function) | Remove event raising for 'action' |
-| .click | .Click(function) | Add event raising for action 'onclick' |  
+| - | .OnClick(function) | Add event raising for action 'onclick' |  
+| .click | .Click() | Click element |  
 | .hide |  .Hide() | Hide element |
 | .show |  .Show() | Show element |
 | .fadeIn | .FadeIn() | Disappearing element |
@@ -91,6 +93,7 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 Auto navigation bar - Breadcrumbs. Parameters: tag is template id, options is named directory object, bool is add query to path
 | -  | .[FormToObject](README.md#exampleFormToObject)() | Get object from form data |
 | -  | .[ObjectToForm](README.md#exampleObjectToForm)(data,style) | Create a form from the data [object data](/example/J-test-schema-1.json) and [object style](/example/J-test-styles-1.json) |
+| -  | J.fn.HumanizeFileSize(number) | Human readable file size, return string |
 
 >communication Network methods:
 
@@ -98,11 +101,13 @@ Auto navigation bar - Breadcrumbs. Parameters: tag is template id, options is na
 | ------------ | ------------ | ------------ |
 | .ajax | J.fn.[GetJSON](README.md#exampleGetJSON)(url,callback[,user,password]) | Get object from remote Json data |
 | .ajax | J.fn.[SendJSON](README.md#exampleSendJSON)(url,data,callback[,user,password]) | Send object by POST method in Json data format |
-| - | J.[JsonRPC](README.md#exampleJsonRPC)(url[,user,password]) | JSON-RPC Object helper |
-| - | J.JsonRPC.DataRequest | (array) get/set - data Request |
-| - | J.JsonRPC.DataResult | (array) get - data Result |
-| - | J.JsonRPC.DataErrors | (array) get - errors before .Send |
-| - | J.JsonRPC.isErrors | (bool) get - is errors found |
+| .ajax | J.fn.[SendBin](README.md#exampleSendBin)(url,data,[callback,progress,user,password]) | Send binary data by POST method, not 'multipart/form-data' format! |
+| - | J.[JsonRPC](README.md#exampleJsonRPC)(endpoint[,user,password]) | JSON-RPC Object helper, endpoint is URI |
+| - | J.JsonRPC.DataRequest | return (array) get/set - data Request |
+| - | J.JsonRPC.DataResult | return (array) get - data Result |
+| - | J.JsonRPC.DataErrors | return (array) get - errors before .Send |
+| - | J.JsonRPC.isErrors | return (bool) get - is errors found |
+| - | J.JsonRPC.SetEndPoint(endpoint) | set URI |
 | - | J.JsonRPC.CallBack(function) | callback from send request  |
 | - | J.JsonRPC.SetCredentials(user,password) | Basic Authorization |
 | - | J.JsonRPC.Request(method, value, id) | make request  |
@@ -127,6 +132,38 @@ Auto navigation bar - Breadcrumbs. Parameters: tag is template id, options is na
 	var data = { id: 1, other: "test" };
     J.Ready(function () {
 		J.fn.SendJSON("http://send.test.com/", data, console.log.bind(console));
+	});
+
+<a name="exampleSendBin"></a>
+>SendBin remote binary data (example, local file)
+>! using binary stream, not 'multipart/form-data' format !
+
+HTML part:
+
+	<form name="frmupload" id="upload-form">
+    <input type="file" name="infile" id="in-file" accept=".*"/>
+    <label for="in-file">Upload Files</label>
+    <progress value="0" max="100" id="infile-pg"></progress>
+	<input type="submit" value="Send"/>
+	</form>
+
+JavaScript part:
+
+	var frmf = J("#in-file")[0],
+	    file = frmf.files[0];
+
+	J("#upload-form").On("submit", function (e) {
+		if (file) {
+	        J("#infile-pg").Attr("max", file.size).Show();
+	        J.fn.SendBin("/url/upload?" + file.name, file,
+	            function (t, s) {
+					console.log("Alert",t,s);
+	            },
+	            function (c, t) {
+	                J("#infile-pg").Attr("value", c)
+		        }
+			);			
+		}
 	});
 
 <a name="exampleFormToObject"></a>
