@@ -31,8 +31,8 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 
  J now on public CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.6/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.6/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -57,7 +57,7 @@ Also, a number of methods not included in the basic Jquery functionality were ad
 | ------------ | ------------ | ------------ |
 |   | .AddClass | Add class |
 |   | .RemoveClass | Delete class |
-|   | .ToggleClass | Toggle class |
+|   | .ToggleClass(classname,classname) | Toggle class |
 |   | .HasClass | Has is class |
 |   | .Css | Get css from element |
 |   | .Attr(key,value) | Set attribute to element |

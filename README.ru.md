@@ -31,8 +31,8 @@
 
  J теперь на общедоступном CDN:
 
-        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.css" rel="stylesheet"/>
-        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.5/J.min.js" type="text/javascript"></script>
+        <link href="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.6/J.min.css" rel="stylesheet"/>
+        <script src="https://cdn.rawgit.com/PetersSharp/J-NOTJQUERY/0.0.6/J.min.js" type="text/javascript"></script>
 
 ----------
 
@@ -57,7 +57,7 @@
 | ------------ | ------------ | ------------ |
 |   | .AddClass | Добавить класс |
 |   | .RemoveClass | Удалить класс |
-|   | .ToggleClass | Переключить класс |
+|   | .ToggleClass(classname,classname) | Переключить класс |
 |   | .HasClass | Имеет ли класс |
 |   | .Css | Получить css элемента |
 |   | .Attr(key,value) | Установить атрибуты для элемента |

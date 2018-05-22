@@ -9,7 +9,7 @@
 
 window.J = (function (undefined) {
 
-    var VERSION = "0.0.5",
+    var VERSION = "0.0.6",
     TYPE = {
         FUNCTION: "function",
         STRING:   "string",
@@ -202,6 +202,15 @@ window.J = (function (undefined) {
     RemoveClass (cn) {
         Array.from(this).forEach(ele => {
             ele.classList.remove(cn)
+        });
+        return this;
+    },
+    ToggleClass (cn1 = null, cn2 = null) {
+        Array.from(this).forEach(ele => {
+            if (ele.classList) {
+                if (cn1) { ele.classList.toggle(cn1); }
+                if (cn2) { ele.classList.toggle(cn2); }
+            }
         });
         return this;
     },
@@ -935,7 +944,7 @@ J.fn = {
         };
         request.onload = function() {
             if (J.fn.dataHttpRequestCondition(request, cb, J.fn.ERRORS.SNDERR)) {
-                cb(request.responseText, true);
+                J.fn.dataHttpRequestJsonParse(request, cb, J.fn.ERRORS.SNDERR);
             }
         };
         request.onerror = function() {

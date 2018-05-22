@@ -116,6 +116,7 @@ html {
 .input__caption {
     color: #1E88E5;
     margin: 10px 5px 10px 10px;
+    font-variant: small-caps;
 }
 
 .alert-green .alert__close,
